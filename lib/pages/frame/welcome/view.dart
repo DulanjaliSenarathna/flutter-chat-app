@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class WelcomePage extends GetView<WelcomeCotroller> {
+class WelcomePage extends GetView<WelcomeController> {
   const WelcomePage({super.key});
 
   Widget _buildPageHeadTitle(String title) {
