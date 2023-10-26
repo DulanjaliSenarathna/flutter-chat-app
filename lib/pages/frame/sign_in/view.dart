@@ -41,12 +41,15 @@ class SignInPage extends GetView<SignInController> {
                   offset: const Offset(0, 1))
             ]),
         child: Row(
-          mainAxisAlignment: logo==''? MainAxisAlignment.center : MainAxisAlignment.start,
+          mainAxisAlignment:
+              logo == '' ? MainAxisAlignment.center : MainAxisAlignment.start,
           children: [
-            logo==''? Container(): Container(
-              padding: EdgeInsets.only(left: 40.w, right: 30.w),
-              child: Image.asset("assets/icons/${logo}.png"),
-            ),
+            logo == ''
+                ? Container()
+                : Container(
+                    padding: EdgeInsets.only(left: 40.w, right: 30.w),
+                    child: Image.asset("assets/icons/${logo}.png"),
+                  ),
             Container(
               child: Text("Sign in with ${loginType}",
                   textAlign: TextAlign.center,
@@ -58,8 +61,9 @@ class SignInPage extends GetView<SignInController> {
           ],
         ),
       ),
-      onTap: (){
-
+      onTap: () {
+        //print("sign in from third party ${loginType}");
+        controller.handleSignIn("google");
       },
     );
   }
@@ -89,6 +93,32 @@ class SignInPage extends GetView<SignInController> {
     );
   }
 
+  Widget _buildSignUpWidget() {
+    return GestureDetector(
+      child: Column(
+        children: [
+          Text("Already have an account?",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  color: AppColors.primaryText,
+                  fontWeight: FontWeight.normal,
+                  fontSize: 12.sp)),
+          GestureDetector(
+            child: Text("Sign up here",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    color: AppColors.primaryElement,
+                    fontWeight: FontWeight.normal,
+                    fontSize: 12.sp)),
+          ),
+        ],
+      ),
+      onTap: () {
+        print("sign up from here");
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -102,34 +132,10 @@ class SignInPage extends GetView<SignInController> {
           _buildThirdPartyLogin("Apple", "apple"),
           _buildOrWidget(),
           _buildThirdPartyLogin("phone number", ""),
-          SizedBox(height: 35.h,),
-          GestureDetector(
-            child: Column(
-              children: [
-                Text(
-                  "Already have an account?",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      color: AppColors.primaryText,
-                      fontWeight: FontWeight.normal,
-                      fontSize: 12.sp)
-                  ),
-                  GestureDetector(
-                    child: Text(
-                    "Sign up here",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: AppColors.primaryElement,
-                        fontWeight: FontWeight.normal,
-                        fontSize: 12.sp)
-                    ),
-                  ),
-              ],
-            ),
-            onTap: (){
-              
-            },
-          )
+          SizedBox(
+            height: 35.h,
+          ),
+          _buildSignUpWidget()
         ],
       )),
     );
