@@ -1,9 +1,10 @@
-import 'package:chatty/pages/frame/welcome/controller.dart';
+
+import 'package:chatty/pages/profile/controller.dart';
 import 'package:get/get.dart';
 
-class WelcomeBinding implements Bindings {
+class ProfileBinding implements Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<WelcomeController>(() => WelcomeController());
+    Get.lazyPut<ProfileController>(() => ProfileController());
   }
 }

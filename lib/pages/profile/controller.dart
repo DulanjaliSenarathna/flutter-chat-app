@@ -1,11 +1,11 @@
 import 'package:chatty/common/routes/names.dart';
-import 'package:chatty/pages/frame/welcome/state.dart';
+import 'package:chatty/pages/profile/state.dart';
 import 'package:get/get.dart';
 
-class WelcomeController extends GetxController {
-  WelcomeController();
-  final title = 'Jengo';
-  final state = WelcomeState();
+class ProfileController extends GetxController {
+  ProfileController();
+  final title = 'Jengo .';
+  final state = ProfileState();
 
   @override
   void onReady() {
