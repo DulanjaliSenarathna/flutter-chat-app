@@ -44,13 +44,14 @@ class ProfilePage extends GetView<ProfileController> {
               image: const AssetImage("assets/images/account_header.png")),
         ),
         Positioned(
-            bottom: 20.w,
+            bottom: 0.w,
             right: 0.w,
             height: 35.w,
             child: GestureDetector(
               child: Container(
                 height: 35.w,
                 width: 35.w,
+                padding: EdgeInsets.all(7.w),
                 decoration: BoxDecoration(
                     color: AppColors.primaryElement,
                     borderRadius: BorderRadius.all(Radius.circular(40.w))),
@@ -98,7 +99,7 @@ class ProfilePage extends GetView<ProfileController> {
       child: Container(
         width: 295.w,
         height: 44.h,
-        margin: EdgeInsets.only(top: 60.h, bottom: 30.h),
+        margin: EdgeInsets.only(top: 0.h, bottom: 30.h),
         decoration: BoxDecoration(
             color: AppColors.primarySecondaryElementText,
             borderRadius: BorderRadius.all(Radius.circular(5.w)),
@@ -129,7 +130,9 @@ class ProfilePage extends GetView<ProfileController> {
             content: Container(),
             radius: 5.0,
             confirmTextColor: Colors.white,
-            onConfirm: () {},
+            onConfirm: () {
+              controller.goLogOut();
+            },
             onCancel: () {},
             textConfirm: "Confirm",
             textCancel: "Cancel");
