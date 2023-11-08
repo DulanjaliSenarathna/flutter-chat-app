@@ -1,4 +1,5 @@
 import 'package:chatty/common/entities/entities.dart';
+import 'package:chatty/common/utils/http.dart';
 import 'package:chatty/common/routes/names.dart';
 import 'package:chatty/pages/frame/sign_in/state.dart';
 import 'package:flutter/foundation.dart';
@@ -45,8 +46,11 @@ class SignInController extends GetxController {
     }
   }
 
-  asyncPostAllData() {
+  asyncPostAllData() async {
     print("lets go to the message page");
+    var response = await HttpUtil().get('/api/index');
+
+    print(response);
     Get.offAllNamed(AppRoutes.Message);
   }
 }
