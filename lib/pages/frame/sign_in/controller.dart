@@ -5,8 +5,11 @@ import 'package:chatty/common/store/user.dart';
 import 'package:chatty/common/apis/user.dart';
 import 'package:chatty/common/utils/http.dart';
 import 'package:chatty/common/routes/names.dart';
+import 'package:chatty/common/widgets/toast.dart';
 import 'package:chatty/pages/frame/sign_in/state.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -52,7 +55,19 @@ class SignInController extends GetxController {
   }
 
   asyncPostAllData(LoginRequestEntity loginRequestEntity) async {
-    await UserAPI.Login(params: loginRequestEntity);
+    EasyLoading.instance.loadingStyle = EasyLoadingStyle.light;
+    EasyLoading.show(
+        indicator: const CircularProgressIndicator(),
+        maskType: EasyLoadingMaskType.clear,
+        dismissOnTap: true);
+    var result = await UserAPI.Login(params: loginRequestEntity);
+    if (result.code == 0) {
+      await UserStore.to.saveProfile(result.data!);
+      EasyLoading.dismiss();
+    } else {
+      EasyLoading.dismiss();
+      toastInfo(msg: "Internet Error");
+    }
     Get.offAllNamed(AppRoutes.Message);
   }
 }
