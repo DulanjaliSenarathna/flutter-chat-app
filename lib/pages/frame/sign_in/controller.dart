@@ -1,4 +1,8 @@
+import 'dart:convert';
+
 import 'package:chatty/common/entities/entities.dart';
+import 'package:chatty/common/store/user.dart';
+import 'package:chatty/common/apis/user.dart';
 import 'package:chatty/common/utils/http.dart';
 import 'package:chatty/common/routes/names.dart';
 import 'package:chatty/pages/frame/sign_in/state.dart';
@@ -32,7 +36,8 @@ class SignInController extends GetxController {
           loginPanelListRequestEntity.email = email;
           loginPanelListRequestEntity.open_id = id;
           loginPanelListRequestEntity.type = 2;
-          asyncPostAllData();
+          print(jsonEncode(loginPanelListRequestEntity));
+          asyncPostAllData(loginPanelListRequestEntity);
         }
       } else {
         if (kDebugMode) {
@@ -46,11 +51,8 @@ class SignInController extends GetxController {
     }
   }
 
-  asyncPostAllData() async {
-    print("lets go to the message page");
-    var response = await HttpUtil().get('/api/index');
-
-    print(response);
+  asyncPostAllData(LoginRequestEntity loginRequestEntity) async {
+    await UserAPI.Login(params: loginRequestEntity);
     Get.offAllNamed(AppRoutes.Message);
   }
 }
