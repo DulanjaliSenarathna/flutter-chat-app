@@ -19,12 +19,12 @@ class UserStore extends GetxController {
   UserItem get profile => _profile.value;
   bool get hasToken => token.isNotEmpty;
 
-
   @override
   void onInit() {
     super.onInit();
     token = StorageService.to.getString(STORAGE_USER_TOKEN_KEY);
     var profileOffline = StorageService.to.getString(STORAGE_USER_PROFILE_KEY);
+    print(profileOffline);
     if (profileOffline.isNotEmpty) {
       _isLogin.value = true;
       _profile(UserItem.fromJson(jsonDecode(profileOffline)));
@@ -57,7 +57,7 @@ class UserStore extends GetxController {
   // during logout
   Future<void> onLogout() async {
     // if (_isLogin.value) await UserAPI.logout();
-     await StorageService.to.remove(STORAGE_USER_TOKEN_KEY);
+    await StorageService.to.remove(STORAGE_USER_TOKEN_KEY);
     await StorageService.to.remove(STORAGE_USER_PROFILE_KEY);
     _isLogin.value = false;
     token = '';

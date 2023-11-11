@@ -57,7 +57,8 @@ class ProfilePage extends GetView<ProfileController> {
                     borderRadius: BorderRadius.all(Radius.circular(40.w))),
                 child: Image.asset("assets/icons/edit.png"),
               ),
-            ))
+            )
+          )
       ],
     );
   }

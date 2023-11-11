@@ -1,8 +1,11 @@
 
 import 'package:chatty/pages/frame/welcome/index.dart';
 import 'package:chatty/pages/frame/sign_in/index.dart';
+
 import 'package:chatty/pages/message/index.dart';
 import 'package:chatty/pages/profile/index.dart';
+import 'package:chatty/pages/contact/index.dart';
+
 import 'package:flutter/material.dart';
 import 'package:chatty/common/middlewares/middlewares.dart';
 
@@ -46,9 +49,10 @@ class AppPages {
     GetPage(name: AppRoutes.Forgot, page: () => ForgotPage(), binding: ForgotBinding()),
     GetPage(name: AppRoutes.Phone, page: () => PhonePage(), binding: PhoneBinding()),
     GetPage(name: AppRoutes.SendCode, page: () => SendCodePage(), binding: SendCodeBinding()),
-    // 首页
-    GetPage(name: AppRoutes.Contact, page: () => ContactPage(), binding: ContactBinding()),
     */
+    // 首页
+    GetPage(name: AppRoutes.Contact, page: () => const ContactPage(), binding: ContactBinding()),
+    
     //Message page
     GetPage(name: AppRoutes.Message, page: () => const MessagePage(), binding: MessageBinding(),middlewares: [
        RouteAuthMiddleware(priority: 1),
