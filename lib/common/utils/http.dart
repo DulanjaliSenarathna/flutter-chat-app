@@ -21,7 +21,7 @@ class HttpUtil {
 
 
   HttpUtil._internal() {
-    // BaseOptions、Options、RequestOptions 都可以配置参数，优先级别依次递增，且可以根据优先级别覆盖参数
+    // BaseOptions、Options、RequestOptions Parameters can be configured，Priority levels increase in sequence，且可以根据优先级别覆盖参数
     BaseOptions options = new BaseOptions(
       // 请求基地址,可以包含子路径
       baseUrl: SERVER_API_URL,
@@ -119,15 +119,15 @@ class HttpUtil {
   ErrorEntity createErrorEntity(DioError error) {
     switch (error.type) {
       case DioErrorType.cancel:
-        return ErrorEntity(code: -1, message: "请求取消");
+        return ErrorEntity(code: -1, message: "Request cancellation");
       case DioErrorType.connectTimeout:
-        return ErrorEntity(code: -1, message: "连接超时");
+        return ErrorEntity(code: -1, message: "Connection timed out");
       case DioErrorType.sendTimeout:
-        return ErrorEntity(code: -1, message: "请求超时");
+        return ErrorEntity(code: -1, message: "Request timed out");
       case DioErrorType.receiveTimeout:
-        return ErrorEntity(code: -1, message: "响应超时");
+        return ErrorEntity(code: -1, message: "Response timeout");
       case DioErrorType.cancel:
-        return ErrorEntity(code: -1, message: "请求取消");
+        return ErrorEntity(code: -1, message: "Request cancellation");
       case DioErrorType.response:
         {
           try {
@@ -137,13 +137,13 @@ class HttpUtil {
             // return ErrorEntity(code: errCode, message: errMsg);
             switch (errCode) {
               case 400:
-                return ErrorEntity(code: errCode, message: "请求语法错误");
+                return ErrorEntity(code: errCode, message: "Request syntax error");
               case 401:
-                return ErrorEntity(code: errCode, message: "没有权限");
+                return ErrorEntity(code: errCode, message: "permission denied");
               case 403:
-                return ErrorEntity(code: errCode, message: "服务器拒绝执行");
+                return ErrorEntity(code: errCode, message: "Server refuses to execute");
               case 404:
-                return ErrorEntity(code: errCode, message: "无法连接服务器");
+                return ErrorEntity(code: errCode, message: "can not reach server");
               case 405:
                 return ErrorEntity(code: errCode, message: "请求方法被禁止");
               case 500:
