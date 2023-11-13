@@ -68,7 +68,7 @@ class ContactController extends GetxController {
               fromFirestore: Msg.fromFirestore,
               toFirestore: (Msg msg, options) => msg.toFirestore())
           .add(msgdata);
-/*
+
       Get.offAllNamed(
         "/chat",
         parameters: {
@@ -78,7 +78,7 @@ class ContactController extends GetxController {
           "to_avatar":contactItem.avatar??"",
           "to_online":contactItem.online.toString(),
         }
-      );*/
+      );
       print("...creating new document and adding user info done...");
     } else {
       print("...users are older...");
