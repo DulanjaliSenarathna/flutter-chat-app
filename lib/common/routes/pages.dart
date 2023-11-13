@@ -2,6 +2,7 @@
 import 'package:chatty/pages/frame/welcome/index.dart';
 import 'package:chatty/pages/frame/sign_in/index.dart';
 import 'package:chatty/pages/message/chat/index.dart';
+import 'package:chatty/pages/message/voicecall/index.dart';
 
 import 'package:chatty/pages/message/index.dart';
 import 'package:chatty/pages/profile/index.dart';
@@ -63,10 +64,11 @@ class AppPages {
     GetPage(name: AppRoutes.Profile, page: () => const ProfilePage(), binding: ProfileBinding()),
     
     //chat detail
-    GetPage(name: AppRoutes.Chat, page: () => ChatPage(), binding: ChatBinding()),
+    GetPage(name: AppRoutes.Chat, page: () => const ChatPage(), binding: ChatBinding()),
 /*
     GetPage(name: AppRoutes.Photoimgview, page: () => PhotoImgViewPage(), binding: PhotoImgViewBinding()),
-    GetPage(name: AppRoutes.VoiceCall, page: () => VoiceCallViewPage(), binding: VoiceCallViewBinding()),
+    */
+    GetPage(name: AppRoutes.VoiceCall, page: () => const VoiceCallPage(), binding: VoiceCallBinding()),/*
     GetPage(name: AppRoutes.VideoCall, page: () => VideoCallPage(), binding: VideoCallBinding()),*/
   ];
 
