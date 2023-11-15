@@ -94,6 +94,8 @@ class VoiceCallPage extends GetView<VoiceCallController> {
                       Column(
                         children: [
                           GestureDetector(
+                            onTap: controller.state.isJoined.value?
+                            controller.leaveChannel:controller.joinChannel,
                             child: Container(
                               padding: EdgeInsets.all(15.w),
                               width: 60.w,
