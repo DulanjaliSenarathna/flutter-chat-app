@@ -1,5 +1,6 @@
 //import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'dart:async';
+import 'dart:convert';
 import 'dart:ui';
 
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
@@ -8,6 +9,7 @@ import 'package:chatty/common/store/store.dart';
 import 'package:chatty/common/values/server.dart';
 import 'package:chatty/pages/message/voicecall/state.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
@@ -67,8 +69,19 @@ class VoiceCallController extends GetxController {
         scenario: AudioScenarioType.audioScenarioGameStreaming);
     await joinChannel();
     if (state.call_role == "anchor") {
+      //send notification to the other user
       await player.play();
     }
+  }
+
+  Future<String> getToken() {
+    if(state.call_role=="anchor"){
+     state.channelId.value= md5.convert(utf8.encode("${profile_token}_${state.to_token}")).toString();
+    }else{
+         state.channelId.value= md5.convert(utf8.encode("${state.to_token}_${profile_token}")).toString();
+ 
+    }
+    return "";
   }
 
   Future<void> joinChannel() async {
@@ -79,8 +92,11 @@ class VoiceCallController extends GetxController {
         maskType: EasyLoadingMaskType.clear,
         dismissOnTap: true);
 
+    String token = await getToken();
+
     await engine.joinChannel(
-        token:"007eJxTYMgpPb5+zuLiazMy3ptKHtUo8ZAMWF2w7HvON1uW9X/O/g1WYEg1MjO1MEg0N09MNDZJNky1sDQ1sjSzSE5ONDQwtEw2WfQ9NLUhkJHhac8tJkYGCATxWRmyUvPS8xkYAAKsIlU=",
+        token:
+            "007eJxTYMgpPb5+zuLiazMy3ptKHtUo8ZAMWF2w7HvON1uW9X/O/g1WYEg1MjO1MEg0N09MNDZJNky1sDQ1sjSzSE5ONDQwtEw2WfQ9NLUhkJHhac8tJkYGCATxWRmyUvPS8xkYAAKsIlU=",
         channelId: "jengo",
         uid: 0,
         options: ChannelMediaOptions(

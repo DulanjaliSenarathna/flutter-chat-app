@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:chatty/common/routes/names.dart';
 import 'package:chatty/pages/message/chat/state.dart';
 import 'package:get/get.dart';
@@ -16,6 +18,7 @@ class ChatController extends GetxController {
     state.more_status.value = false;
     Get.toNamed(AppRoutes.VoiceCall,
     parameters: {
+      "to_token":state.to_token.value,
       "to_name" : state.to_name.value,
       "to_avatar" : state.to_avatar.value,
       "call_role":"anchor"
