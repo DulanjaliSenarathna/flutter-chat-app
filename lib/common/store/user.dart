@@ -10,7 +10,7 @@ class UserStore extends GetxController {
 
   // Log in or not
   final _isLogin = false.obs;
-  //  token
+  //  token - this is our access token sent down for authorization.
   String token = '';
   // user profile
   final _profile = UserItem().obs;

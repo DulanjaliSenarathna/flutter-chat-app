@@ -12,6 +12,7 @@ import 'package:chatty/common/values/server.dart';
 import 'package:chatty/pages/message/voicecall/state.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crypto/crypto.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
@@ -89,6 +90,10 @@ class VoiceCallController extends GetxController {
 
     CallTokenRequestEntity callTokenRequestEntity = CallTokenRequestEntity();
     callTokenRequestEntity.channel_name = state.channelId.value;
+
+    print("............channel Id is ${state.channelId.value}");
+    print("...my access token is${UserStore.to.token}");
+
     var res = await ChatAPI.call_token(params: callTokenRequestEntity);
     if (res.code == 0) {
       return res.data!;
@@ -105,11 +110,15 @@ class VoiceCallController extends GetxController {
         dismissOnTap: true);
 
     String token = await getToken();
+    if (token.isEmpty) {
+      EasyLoading.dismiss();
+      Get.back();
+      return;
+    }
 
     await engine.joinChannel(
-        token:
-            "007eJxTYMgpPb5+zuLiazMy3ptKHtUo8ZAMWF2w7HvON1uW9X/O/g1WYEg1MjO1MEg0N09MNDZJNky1sDQ1sjSzSE5ONDQwtEw2WfQ9NLUhkJHhac8tJkYGCATxWRmyUvPS8xkYAAKsIlU=",
-        channelId: "jengo",
+        token: token,
+        channelId: state.channelId.value,
         uid: 0,
         options: ChannelMediaOptions(
             channelProfile: channelProfileType,
