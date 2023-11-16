@@ -11,5 +11,8 @@ class VoiceCallState {
   var to_name = "".obs;
   var to_avatar = "".obs;
   var doc_id = "".obs;
+
+  //reciever = audience
+  //anchor = caller
   var call_role = "audience".obs;
 }

@@ -21,34 +21,34 @@ class HttpUtil {
 
 
   HttpUtil._internal() {
-    // BaseOptions、Options、RequestOptions Parameters can be configured，Priority levels increase in sequence，且可以根据优先级别覆盖参数
+    // BaseOptions、Options、RequestOptions Parameters can be configured，Priority levels increase in sequence，and can override parameters based on priority level
     BaseOptions options = new BaseOptions(
-      // 请求基地址,可以包含子路径
+      // Request base address, can include sub-paths
       baseUrl: SERVER_API_URL,
 
       // baseUrl: storage.read(key: STORAGE_KEY_APIURL) ?? SERVICE_API_BASEURL,
-      //连接服务器超时时间，单位是毫秒.
+      //Connection server timeout, unit is milliseconds.
       connectTimeout: 10000,
 
-      // 响应流上前后两次接受到数据的间隔，单位为毫秒。
+      // The interval between two data receptions on the response stream, in milliseconds.
       receiveTimeout: 5000,
 
-      // Http请求头.
+      // Http request header.
       headers: {},
 
-      /// 请求的Content-Type，默认值是"application/json; charset=utf-8".
-      /// 如果您想以"application/x-www-form-urlencoded"格式编码请求数据,
-      /// 可以设置此选项为 `Headers.formUrlEncodedContentType`,  这样[Dio]
-      /// 就会自动编码请求体.
+      /// Content-Type of the request, the default value is "application/json; charset=utf-8".
+      /// If you want to encode the request data in "application/x-www-form-urlencoded" format,
+      /// You can set this option to `Headers.formUrlEncodedContentType`, so [Dio]
+      /// The request body will be automatically encoded.
       contentType: 'application/json; charset=utf-8',
 
-      /// [responseType] 表示期望以那种格式(方式)接受响应数据。
-      /// 目前 [ResponseType] 接受三种类型 `JSON`, `STREAM`, `PLAIN`.
+      /// [responseType] Indicates the format (method) in which response data is expected to be received。
+      /// Currently [ResponseType] accepts three types: `JSON`, `STREAM`, `PLAIN`.
       ///
-      /// 默认值是 `JSON`, 当响应头中content-type为"application/json"时，dio 会自动将响应内容转化为json对象。
-      /// 如果想以二进制方式接受响应数据，如下载一个二进制文件，那么可以使用 `STREAM`.
+      /// The default value is `JSON`. When the content-type in the response header is "application/json", dio will automatically convert the response content into a json object.
+      ///If you want to receive the response data in binary form, such as downloading a binary file, you can use `STREAM`.
       ///
-      /// 如果想以文本(字符串)格式接收响应数据，请使用 `PLAIN`.
+      /// If you want to receive response data in text (string) format, use `PLAIN`.
       responseType: ResponseType.json,
     );
 
@@ -61,26 +61,26 @@ class HttpUtil {
       return client;
     };
 
-    // Cookie管理
+    // manage Cookie
     CookieJar cookieJar = CookieJar();
     dio.interceptors.add(CookieManager(cookieJar));
 
-    // 添加拦截器
+    // Add interceptor
     dio.interceptors.add(InterceptorsWrapper(
       onRequest: (options, handler) {
         // Do something before request is sent
         return handler.next(options); //continue
-        // 如果你想完成请求并返回一些自定义数据，你可以resolve一个Response对象 `handler.resolve(response)`。
-        // 这样请求将会被终止，上层then会被调用，then中返回的数据将是你的自定义response.
+        // If you want to complete the request and return some custom data, you can resolve a Response object`handler.resolve(response)`。
+        // In this way, the request will be terminated, the upper-layer then will be called, and the data returned in then will be your custom response.
         //
-        // 如果你想终止请求并触发一个错误,你可以返回一个`DioError`对象,如`handler.reject(error)`，
-        // 这样请求将被中止并触发异常，上层catchError会被调用。
+        // If you want to terminate the request and trigger an error, you can return a `DioError` object, such as `handler.reject(error)`,
+        // In this way, the request will be aborted and an exception will be triggered, and the upper layer catchError will be called.
       },
       onResponse: (response, handler) {
         // Do something with response data
         return handler.next(response); // continue
-        // 如果你想终止请求并触发一个错误,你可以 reject 一个`DioError`对象,如`handler.reject(error)`，
-        // 这样请求将被中止并触发异常，上层catchError会被调用。
+        // If you want to terminate the request and trigger an error, you can reject a `DioError` object, such as `handler.reject(error)`,
+        // In this way, the request will be aborted and an exception will be triggered, and the upper layer catchError will be called.
       },
       onError: (DioError e, handler) {
         // Do something with response error
@@ -88,17 +88,17 @@ class HttpUtil {
         ErrorEntity eInfo = createErrorEntity(e);
         onError(eInfo);
         return handler.next(e); //continue
-        // 如果你想完成请求并返回一些自定义数据，可以resolve 一个`Response`,如`handler.resolve(response)`。
-        // 这样请求将会被终止，上层then会被调用，then中返回的数据将是你的自定义response.
+        // If you want to complete the request and return some custom data, you can resolve a `Response`, such as `handler.resolve(response)`.
+        // In this way, the request will be terminated, the upper-layer then will be called, and the data returned in then will be your custom response.
       },
     ));
   }
 
   /*
-   * error统一处理
+   * error Unified processing
    */
 
-  // 错误处理
+  // Error handling
   void onError(ErrorEntity eInfo) {
     print('error.code -> ' +
         eInfo.code.toString() +
@@ -110,12 +110,12 @@ class HttpUtil {
         EasyLoading.showError(eInfo.message);
         break;
       default:
-        EasyLoading.showError('未知错误');
+        EasyLoading.showError('unknown error');
         break;
     }
   }
 
-  // 错误信息
+  // error message
   ErrorEntity createErrorEntity(DioError error) {
     switch (error.type) {
       case DioErrorType.cancel:
@@ -145,18 +145,18 @@ class HttpUtil {
               case 404:
                 return ErrorEntity(code: errCode, message: "can not reach server");
               case 405:
-                return ErrorEntity(code: errCode, message: "请求方法被禁止");
+                return ErrorEntity(code: errCode, message: "Request method is forbidden");
               case 500:
-                return ErrorEntity(code: errCode, message: "服务器内部错误");
+                return ErrorEntity(code: errCode, message: "Server internal error");
               case 502:
-                return ErrorEntity(code: errCode, message: "无效的请求");
+                return ErrorEntity(code: errCode, message: "Invalid request");
               case 503:
-                return ErrorEntity(code: errCode, message: "服务器挂了");
+                return ErrorEntity(code: errCode, message: "The server is down");
               case 505:
-                return ErrorEntity(code: errCode, message: "不支持HTTP协议请求");
+                return ErrorEntity(code: errCode, message: "HTTP protocol requests are not supported");
               default:
                 {
-                  // return ErrorEntity(code: errCode, message: "未知错误");
+                  // return ErrorEntity(code: errCode, message: "unknown error");
                   return ErrorEntity(
                     code: errCode,
                     message: error.response != null
@@ -166,7 +166,7 @@ class HttpUtil {
                 }
             }
           } on Exception catch (_) {
-            return ErrorEntity(code: -1, message: "未知错误");
+            return ErrorEntity(code: -1, message: "unknown error");
           }
         }
       default:
@@ -177,16 +177,16 @@ class HttpUtil {
   }
 
   /*
-   * 取消请求
+   * Cancel request
    *
-   * 同一个cancel token 可以用于多个请求，当一个cancel token取消时，所有使用该cancel token的请求都会被取消。
-   * 所以参数可选
+   * The same cancel token can be used for multiple requests. When a cancel token is canceled, all requests using this cancel token will be cancelled.
+   * So the parameters are optional
    */
   void cancelRequests(CancelToken token) {
     token.cancel("cancelled");
   }
 
-  /// 读取本地配置
+  /// Read local configuration
   Map<String, dynamic>? getAuthorizationHeader() {
     var headers = <String, dynamic>{};
     if (Get.isRegistered<UserStore>() && UserStore.to.hasToken == true) {
@@ -195,8 +195,8 @@ class HttpUtil {
     return headers;
   }
 
-  /// restful get 操作
-  /// refresh 是否下拉刷新 默认 false
+  /// restful get operate
+  /// refresh Whether to pull down to refresh Default false
   /// noCache 是否不缓存 默认 true
   /// list 是否列表 默认 false
   /// cacheKey 缓存key

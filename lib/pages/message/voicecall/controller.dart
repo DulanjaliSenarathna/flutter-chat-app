@@ -33,6 +33,7 @@ class VoiceCallController extends GetxController {
     var data = Get.parameters;
     state.to_name.value = data["to_name"] ?? "";
     state.to_avatar.value = data["to_avatar"] ?? "";
+    state.call_role.value = data["call_role"] ?? "";
     initEngine();
   }
 
@@ -64,7 +65,10 @@ class VoiceCallController extends GetxController {
     await engine.setAudioProfile(
         profile: AudioProfileType.audioProfileDefault,
         scenario: AudioScenarioType.audioScenarioGameStreaming);
-   await joinChannel();
+    await joinChannel();
+    if (state.call_role == "anchor") {
+      await player.play();
+    }
   }
 
   Future<void> joinChannel() async {
@@ -76,8 +80,7 @@ class VoiceCallController extends GetxController {
         dismissOnTap: true);
 
     await engine.joinChannel(
-        token:
-            "007eJxTYJD8IKdY81niSMn9bpYLoV0XfT6kF9UVHlPcPcmq793EywUKDKlGZqYWBonm5omJxibJhqkWlqZGlmYWycmJhgaGlskmq5SDUxsCGRkCyiUYGKEQxGdlyErNS89nYAAAi80ffw==",
+        token:"007eJxTYMgpPb5+zuLiazMy3ptKHtUo8ZAMWF2w7HvON1uW9X/O/g1WYEg1MjO1MEg0N09MNDZJNky1sDQ1sjSzSE5ONDQwtEw2WfQ9NLUhkJHhac8tJkYGCATxWRmyUvPS8xkYAAKsIlU=",
         channelId: "jengo",
         uid: 0,
         options: ChannelMediaOptions(
@@ -107,7 +110,7 @@ class VoiceCallController extends GetxController {
     await player.stop();
   }
 
-   @override
+  @override
   void onClose() {
     _dispose();
     super.onClose();

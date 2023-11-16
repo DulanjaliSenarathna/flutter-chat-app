@@ -21,7 +21,7 @@ class AppPages {
   static List<String> history = [];
  
   static final List<GetPage> routes = [
-    // 免登陆
+    // No need to log in
     GetPage(
       name: AppRoutes.INITIAL,
       page: () => const WelcomePage(),
@@ -35,7 +35,7 @@ class AppPages {
       binding: SignInBinding(),
     ),
 /*
-    // 需要登录
+    // Login required
     // GetPage(
     //   name: AppRoutes.Application,
     //   page: () => ApplicationPage(),
@@ -45,14 +45,14 @@ class AppPages {
     //   ],
     // ),
 
-    // 最新路由
+    // Latest route
     GetPage(name: AppRoutes.EmailLogin, page: () => EmailLoginPage(), binding: EmailLoginBinding()),
     GetPage(name: AppRoutes.Register, page: () => RegisterPage(), binding: RegisterBinding()),
     GetPage(name: AppRoutes.Forgot, page: () => ForgotPage(), binding: ForgotBinding()),
     GetPage(name: AppRoutes.Phone, page: () => PhonePage(), binding: PhoneBinding()),
     GetPage(name: AppRoutes.SendCode, page: () => SendCodePage(), binding: SendCodeBinding()),
     */
-    // 首页
+    // front page
     GetPage(name: AppRoutes.Contact, page: () => const ContactPage(), binding: ContactBinding()),
     
     //Message page
