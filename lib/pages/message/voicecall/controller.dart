@@ -4,6 +4,8 @@ import 'dart:convert';
 import 'dart:ui';
 
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
+import 'package:chatty/common/apis/apis.dart';
+import 'package:chatty/common/entities/chat.dart';
 import 'package:chatty/common/routes/names.dart';
 import 'package:chatty/common/store/store.dart';
 import 'package:chatty/common/values/server.dart';
@@ -74,12 +76,22 @@ class VoiceCallController extends GetxController {
     }
   }
 
-  Future<String> getToken() {
-    if(state.call_role=="anchor"){
-     state.channelId.value= md5.convert(utf8.encode("${profile_token}_${state.to_token}")).toString();
-    }else{
-         state.channelId.value= md5.convert(utf8.encode("${state.to_token}_${profile_token}")).toString();
- 
+  Future<String> getToken() async {
+    if (state.call_role == "anchor") {
+      state.channelId.value = md5
+          .convert(utf8.encode("${profile_token}_${state.to_token}"))
+          .toString();
+    } else {
+      state.channelId.value = md5
+          .convert(utf8.encode("${state.to_token}_${profile_token}"))
+          .toString();
+    }
+
+    CallTokenRequestEntity callTokenRequestEntity = CallTokenRequestEntity();
+    callTokenRequestEntity.channel_name = state.channelId.value;
+    var res = await ChatAPI.call_token(params: callTokenRequestEntity);
+    if (res.code == 0) {
+      return res.data!;
     }
     return "";
   }
