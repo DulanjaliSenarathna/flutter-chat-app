@@ -6,6 +6,7 @@ import 'package:chatty/common/entities/entities.dart';
 import 'package:chatty/common/routes/names.dart';
 import 'package:chatty/common/store/store.dart';
 import 'package:chatty/common/values/values.dart';
+import 'package:chatty/firebase_options.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -59,8 +60,8 @@ class FirebaseMassagingHandler {
         print("initialMessage------");
         print(initialMessage);
       }
-      var initializationSettingsAndroid = AndroidInitializationSettings("ic_launcher");
-      var darwinInitializationSettings =DarwinInitializationSettings();
+      var initializationSettingsAndroid = const AndroidInitializationSettings("ic_launcher");
+      var darwinInitializationSettings =const DarwinInitializationSettings();
       var initializationSettings = InitializationSettings(android: initializationSettingsAndroid,iOS: darwinInitializationSettings);
       flutterLocalNotificationsPlugin.initialize(initializationSettings,onDidReceiveNotificationResponse:(value){
         print("----------onDidReceiveNotificationResponse");
@@ -316,7 +317,7 @@ class FirebaseMassagingHandler {
     }
    // PlascoRequests().initReport();
   }
-/*
+
   @pragma('vm:entry-point')
   static Future<void> firebaseMessagingBackground(RemoteMessage message) async {
     await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform,);
@@ -355,6 +356,6 @@ class FirebaseMassagingHandler {
 
     }
 
-  }*/
+  }
 }
 

@@ -40,6 +40,7 @@ class VoiceCallController extends GetxController {
     state.to_avatar.value = data["to_avatar"] ?? "";
     state.call_role.value = data["call_role"] ?? "";
     state.doc_id.value = data["doc_id"] ?? "";
+    state.to_token.value = data["to_token"] ?? "";
     initEngine();
   }
 
@@ -88,9 +89,9 @@ class VoiceCallController extends GetxController {
     callRequestEntity.to_name = state.to_name.value;
 
     var res = await ChatAPI.call_notifications(params: callRequestEntity);
-    if (res.data == 0) {
+    if (res.code == 0) {
       print("notification success");
-    }else{
+    } else {
       print("could not send notification");
     }
   }
@@ -102,7 +103,7 @@ class VoiceCallController extends GetxController {
           .toString();
     } else {
       state.channelId.value = md5
-          .convert(utf8.encode("${state.to_token}_${profile_token}"))
+          .convert(utf8.encode("${state.to_token}_$profile_token"))
           .toString();
     }
 
@@ -123,7 +124,7 @@ class VoiceCallController extends GetxController {
     await Permission.microphone.request();
     EasyLoading.instance.loadingStyle = EasyLoadingStyle.light;
     EasyLoading.show(
-        indicator: CircularProgressIndicator(),
+        indicator: const CircularProgressIndicator(),
         maskType: EasyLoadingMaskType.clear,
         dismissOnTap: true);
 
@@ -148,7 +149,7 @@ class VoiceCallController extends GetxController {
   Future<void> leaveChannel() async {
     EasyLoading.instance.loadingStyle = EasyLoadingStyle.light;
     EasyLoading.show(
-        indicator: CircularProgressIndicator(),
+        indicator: const CircularProgressIndicator(),
         maskType: EasyLoadingMaskType.clear,
         dismissOnTap: true);
 

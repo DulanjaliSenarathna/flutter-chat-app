@@ -1,4 +1,4 @@
-import 'package:chatty/common/routes/names.dart';
+
 import 'package:chatty/common/store/store.dart';
 import 'package:chatty/pages/profile/state.dart';
 import 'package:get/get.dart';
