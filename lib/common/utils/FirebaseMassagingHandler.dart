@@ -44,7 +44,7 @@ class FirebaseMassagingHandler {
   static Future<void> config() async {
     FirebaseMessaging messaging = FirebaseMessaging.instance;
     try {
-      RemoteMessage newMessage = RemoteMessage();
+      //RemoteMessage newMessage = RemoteMessage();
       await messaging.requestPermission(
         sound: true,
         badge: true,
@@ -96,6 +96,8 @@ class FirebaseMassagingHandler {
           var doc_id = data["doc_id"]??"";
           // var call_role= data["call_type"];
           if (to_token != null && to_name != null && to_avatar != null) {
+
+            // shows the notification tray
             Get.snackbar(
                 icon:Container(
                   width: 40.w,
@@ -111,9 +113,9 @@ class FirebaseMassagingHandler {
                 ),
                 "${to_name}",
                 "Voice call",
-                duration:Duration(seconds: 30),
+                duration:const Duration(seconds: 30),
                 isDismissible:false,
-                mainButton:TextButton(onPressed: (){}, child: Container(width:90.w, child: Row(mainAxisAlignment:MainAxisAlignment.spaceBetween,children: [
+                mainButton:TextButton(onPressed: (){}, child: SizedBox(width:90.w, child: Row(mainAxisAlignment:MainAxisAlignment.spaceBetween,children: [
                   GestureDetector(
                     onTap: (){
                       if(Get.isSnackbarOpen){
