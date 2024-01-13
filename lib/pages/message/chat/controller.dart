@@ -17,6 +17,9 @@ class ChatController extends GetxController {
   //get the user or sender's token
   final token = UserStore.to.profile.token;
 
+  //firebase data instance
+  final db = FirebaseFirestore.instance;
+
   void goMore() {
     state.more_status.value = state.more_status.value ? false : true;
   }
@@ -44,7 +47,7 @@ class ChatController extends GetxController {
     state.to_online.value = data['to_online'] ?? "1";
   }
 
-  void sendMessage() {
+  void sendMessage() async {
     String sendContent = myInputController.text;
     print('................$sendContent');
     if (sendContent.isEmpty) {
@@ -53,11 +56,17 @@ class ChatController extends GetxController {
     }
 
     //Created an object to send to firebase
-    Msgcontent(
-      token: token,
-      content: sendContent,
-      type: "text",
-      addtime: Timestamp.now()
-    );
+   final content =  Msgcontent(
+        token: token,
+        content: sendContent,
+        type: "text",
+        addtime: Timestamp.now());
+
+    db.collection('message').doc(doc_id).collection('msglist')
+    .withConverter(
+      fromFirestore: Msgcontent.fromFirestore,
+      toFirestore: (Msgcontent msg,options)=>msg.toFirestore()).add(content).then((DocumentReference doc) =>{
+        print('.....new msg docid is ${doc.id}')
+      } );
   }
 }
