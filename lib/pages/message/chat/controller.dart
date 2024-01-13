@@ -56,17 +56,23 @@ class ChatController extends GetxController {
     }
 
     //Created an object to send to firebase
-   final content =  Msgcontent(
+    final content = Msgcontent(
         token: token,
         content: sendContent,
         type: "text",
         addtime: Timestamp.now());
 
-    db.collection('message').doc(doc_id).collection('msglist')
-    .withConverter(
-      fromFirestore: Msgcontent.fromFirestore,
-      toFirestore: (Msgcontent msg,options)=>msg.toFirestore()).add(content).then((DocumentReference doc) =>{
-        print('.....new msg docid is ${doc.id}')
-      } );
+    db
+        .collection('message')
+        .doc(doc_id)
+        .collection('msglist')
+        .withConverter(
+            fromFirestore: Msgcontent.fromFirestore,
+            toFirestore: (Msgcontent msg, options) => msg.toFirestore())
+        .add(content)
+        .then((DocumentReference doc) {
+      print('..... base id is $doc_id, new msg docid is ${doc.id}');
+      myInputController.clear();
+    });
   }
 }
