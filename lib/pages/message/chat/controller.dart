@@ -1,7 +1,10 @@
-
-
+import 'package:chatty/common/entities/entities.dart';
 import 'package:chatty/common/routes/names.dart';
+import 'package:chatty/common/store/store.dart';
+import 'package:chatty/common/widgets/toast.dart';
 import 'package:chatty/pages/message/chat/state.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ChatController extends GetxController {
@@ -9,6 +12,10 @@ class ChatController extends GetxController {
 
   final state = ChatState();
   late String doc_id;
+  final myInputController = TextEditingController();
+
+  //get the user or sender's token
+  final token = UserStore.to.profile.token;
 
   void goMore() {
     state.more_status.value = state.more_status.value ? false : true;
@@ -16,15 +23,13 @@ class ChatController extends GetxController {
 
   void audioCall() {
     state.more_status.value = false;
-    Get.toNamed(AppRoutes.VoiceCall,
-    parameters: {
-      "to_token":state.to_token.value,
-      "to_name" : state.to_name.value,
-      "to_avatar" : state.to_avatar.value,
-      "call_role":"anchor",
-      "doc_id":doc_id
-    }
-    );
+    Get.toNamed(AppRoutes.VoiceCall, parameters: {
+      "to_token": state.to_token.value,
+      "to_name": state.to_name.value,
+      "to_avatar": state.to_avatar.value,
+      "call_role": "anchor",
+      "doc_id": doc_id
+    });
   }
 
   @override
@@ -37,5 +42,22 @@ class ChatController extends GetxController {
     state.to_name.value = data['to_name'] ?? "";
     state.to_avatar.value = data['to_avatar'] ?? "";
     state.to_online.value = data['to_online'] ?? "1";
+  }
+
+  void sendMessage() {
+    String sendContent = myInputController.text;
+    print('................$sendContent');
+    if (sendContent.isEmpty) {
+      toastInfo(msg: 'Content is empty');
+      return;
+    }
+
+    //Created an object to send to firebase
+    Msgcontent(
+      token: token,
+      content: sendContent,
+      type: "text",
+      addtime: Timestamp.now()
+    );
   }
 }

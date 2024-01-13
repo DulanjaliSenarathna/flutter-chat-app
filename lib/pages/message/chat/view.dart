@@ -1,8 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chatty/common/values/colors.dart';
-import 'package:chatty/pages/frame/welcome/controller.dart';
 import 'package:chatty/pages/message/chat/controller.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -96,9 +94,12 @@ class ChatPage extends GetView<ChatController> {
                                         AppColors.primarySecondaryElementText)),
                             child: Row(
                               children: [
+                                //for text fields and send messages
                                 Container(
                                   width: 220.w,
                                   child: TextField(
+                                    controller: controller.myInputController,
+                                    maxLines: null,
                                     keyboardType: TextInputType.multiline,
                                     decoration: InputDecoration(
                                         hintText: "Message....",
@@ -128,7 +129,10 @@ class ChatPage extends GetView<ChatController> {
                                     height: 40.w,
                                     child: Image.asset("assets/icons/send.png"),
                                   ),
-                                  onTap: () {},
+                                  onTap: () {
+                                    //send messages
+                                    controller.sendMessage();
+                                  },
                                 )
                               ],
                             ),
