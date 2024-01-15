@@ -19,6 +19,7 @@ class ChatController extends GetxController {
 
   //firebase data instance
   final db = FirebaseFirestore.instance;
+  var listener;
 
   void goMore() {
     state.more_status.value = state.more_status.value ? false : true;
@@ -47,35 +48,45 @@ class ChatController extends GetxController {
     state.to_online.value = data['to_online'] ?? "1";
   }
 
-  void sendMessage() async {
-    var list = await db.collection("people").add({
-      "name": myInputController.text,
-      "age": 35,
-      "addtime": Timestamp.now()
-    });
-
-    var myList = await db
-        .collection("people")
+  @override
+  void onReady() {
+    // TODO: implement onReady
+    super.onReady();
+    state.msgcontentList.clear();
+    final messages = db
+        .collection("message")
+        .doc(doc_id)
+        .collection("msglist")
+        .withConverter(
+            fromFirestore: Msgcontent.fromFirestore,
+            toFirestore: (Msgcontent msg, options) => msg.toFirestore())
         .orderBy("addtime", descending: true)
-        .snapshots();
+        .limit(15);
 
-    myList.listen((event) {
+    listener = messages.snapshots().listen((event) {
+      List<Msgcontent> tempMsgList = <Msgcontent>[];
       for (var change in event.docChanges) {
         switch (change.type) {
           case DocumentChangeType.added:
-            print("...added a document object ${change.doc.id}");
+            if (change.doc.data() != null) {
+              tempMsgList.add(change.doc.data()!);
+              print("${change.doc.data()!}");
+            }
             break;
 
           case DocumentChangeType.modified:
-            print("...changed value ${change.doc["age"]}");
+            // TODO: Handle this case.
             break;
 
-           case DocumentChangeType.removed:
-            //print("...added a document object ${change.doc.id}");
+          case DocumentChangeType.removed:
+            // TODO: Handle this case.
             break;
         }
       }
     });
+  }
+
+  void sendMessage() async {
     String sendContent = myInputController.text;
     print('................$sendContent');
     if (sendContent.isEmpty) {
