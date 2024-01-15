@@ -82,6 +82,12 @@ class ChatController extends GetxController {
             // TODO: Handle this case.
             break;
         }
+
+        tempMsgList.reversed.forEach((element) {
+          state.msgcontentList.value.insert(0, element);
+        });
+
+        state.msgcontentList.refresh();
       }
     });
   }
