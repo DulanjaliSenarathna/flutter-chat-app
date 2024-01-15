@@ -147,4 +147,12 @@ class ChatController extends GetxController {
       });
     }
   }
+
+  @override
+  void onClose() {
+    // TODO: implement onClose
+    super.onClose();
+    listener.cancel();
+    myInputController.dispose();
+  }
 }
