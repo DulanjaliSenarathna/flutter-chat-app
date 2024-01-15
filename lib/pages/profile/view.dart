@@ -1,7 +1,5 @@
 import 'package:chatty/common/values/colors.dart';
-import 'package:chatty/pages/frame/welcome/controller.dart';
 import 'package:chatty/pages/profile/controller.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
