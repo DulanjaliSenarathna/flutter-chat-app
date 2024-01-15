@@ -48,6 +48,34 @@ class ChatController extends GetxController {
   }
 
   void sendMessage() async {
+    var list = await db.collection("people").add({
+      "name": myInputController.text,
+      "age": 35,
+      "addtime": Timestamp.now()
+    });
+
+    var myList = await db
+        .collection("people")
+        .orderBy("addtime", descending: true)
+        .snapshots();
+
+    myList.listen((event) {
+      for (var change in event.docChanges) {
+        switch (change.type) {
+          case DocumentChangeType.added:
+            print("...added a document object ${change.doc.id}");
+            break;
+
+          case DocumentChangeType.modified:
+            print("...changed value ${change.doc["age"]}");
+            break;
+
+           case DocumentChangeType.removed:
+            //print("...added a document object ${change.doc.id}");
+            break;
+        }
+      }
+    });
     String sendContent = myInputController.text;
     print('................$sendContent');
     if (sendContent.isEmpty) {
@@ -95,10 +123,10 @@ class ChatController extends GetxController {
       }
 
       await db.collection("message").doc(doc_id).update({
-        "to_msg_num":to_msg_num,
-        "from_msg_num":from_msg_num,
-        "last_msg":sendContent,
-        "last_time":Timestamp.now()
+        "to_msg_num": to_msg_num,
+        "from_msg_num": from_msg_num,
+        "last_msg": sendContent,
+        "last_time": Timestamp.now()
       });
     }
   }
