@@ -1,4 +1,3 @@
-import 'package:chatty/common/style/color.dart';
 import 'package:chatty/pages/message/chat/controller.dart';
 import 'package:chatty/pages/message/chat/widgets/chat_left_list.dart';
 import 'package:chatty/pages/message/chat/widgets/chat_right_list.dart';
@@ -14,6 +13,7 @@ class ChatList extends GetView<ChatController> {
     return Obx(() => Container(
           padding: EdgeInsets.only(bottom: 70.w),
           child: CustomScrollView(
+            controller: controller.myScrollController,
             reverse: true,
             slivers: [
               SliverPadding(

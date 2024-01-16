@@ -20,6 +20,7 @@ class ChatController extends GetxController {
   //firebase data instance
   final db = FirebaseFirestore.instance;
   var listener;
+  ScrollController myScrollController = ScrollController();
 
   void goMore() {
     state.more_status.value = state.more_status.value ? false : true;
@@ -82,14 +83,19 @@ class ChatController extends GetxController {
             // TODO: Handle this case.
             break;
         }
-
       }
-      
-        tempMsgList.reversed.forEach((element) {
-          state.msgcontentList.value.insert(0, element);
-        });
 
-        state.msgcontentList.refresh();
+      tempMsgList.reversed.forEach((element) {
+        state.msgcontentList.value.insert(0, element);
+      });
+
+      state.msgcontentList.refresh();
+      if (myScrollController.hasClients) {
+        myScrollController.animateTo(
+            myScrollController.position.minScrollExtent,
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeOut);
+      }
     });
   }
 
@@ -155,5 +161,6 @@ class ChatController extends GetxController {
     super.onClose();
     listener.cancel();
     myInputController.dispose();
+    myScrollController.dispose();
   }
 }
