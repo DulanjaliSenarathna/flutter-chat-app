@@ -1,5 +1,6 @@
 import 'package:chatty/common/style/color.dart';
 import 'package:chatty/pages/message/chat/controller.dart';
+import 'package:chatty/pages/message/chat/widgets/chat_left_list.dart';
 import 'package:chatty/pages/message/chat/widgets/chat_right_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,7 +12,7 @@ class ChatList extends GetView<ChatController> {
   @override
   Widget build(BuildContext context) {
     return Obx(() => Container(
-      padding: EdgeInsets.only(bottom: 70.w),
+          padding: EdgeInsets.only(bottom: 70.w),
           child: CustomScrollView(
             reverse: true,
             slivers: [
@@ -23,10 +24,10 @@ class ChatList extends GetView<ChatController> {
                   if (controller.token == item.token) {
                     //user token with msglist token
                     return ChatRightList(item);
+                  } else {
+                    return ChatLeftList(item);
                   }
-                },
-                childCount: controller.state.msgcontentList.length
-                )),
+                }, childCount: controller.state.msgcontentList.length)),
               )
             ],
           ),

@@ -24,7 +24,7 @@ Widget ChatRightList(Msgcontent item) {
                 borderRadius: BorderRadius.all(Radius.circular(5.w))
               ),
               padding: EdgeInsets.only(top: 10.w,bottom: 10.w,right: 10.w,left: 10.w),
-              child: item.type=="text"?Text("${item.content},",
+              child: item.type=="text"?Text("${item.content}",
               style: TextStyle(
                 fontSize: 14.sp,
                 color: AppColors.primaryElementText
