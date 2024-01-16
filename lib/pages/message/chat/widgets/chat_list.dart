@@ -1,3 +1,4 @@
+import 'package:chatty/common/style/color.dart';
 import 'package:chatty/pages/message/chat/controller.dart';
 import 'package:chatty/pages/message/chat/widgets/chat_right_list.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,9 @@ class ChatList extends GetView<ChatController> {
   @override
   Widget build(BuildContext context) {
     return Obx(() => Container(
+      padding: EdgeInsets.only(bottom: 70.w),
           child: CustomScrollView(
+            reverse: true,
             slivers: [
               SliverPadding(
                 padding: EdgeInsets.symmetric(vertical: 0.w, horizontal: 0.w),
@@ -21,7 +24,9 @@ class ChatList extends GetView<ChatController> {
                     //user token with msglist token
                     return ChatRightList(item);
                   }
-                })),
+                },
+                childCount: controller.state.msgcontentList.length
+                )),
               )
             ],
           ),
