@@ -5,6 +5,7 @@ import 'package:chatty/common/widgets/toast.dart';
 import 'package:chatty/pages/message/chat/state.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
 
 class ChatController extends GetxController {
@@ -20,6 +21,7 @@ class ChatController extends GetxController {
   //firebase data instance
   final db = FirebaseFirestore.instance;
   var listener;
+  var isLoadmore = true;
   ScrollController myScrollController = ScrollController();
 
   void goMore() {
@@ -92,11 +94,39 @@ class ChatController extends GetxController {
       state.msgcontentList.refresh();
       if (myScrollController.hasClients) {
         myScrollController.animateTo(
+            //points to the very top of your list
+            //lowest index
             myScrollController.position.minScrollExtent,
             duration: const Duration(milliseconds: 300),
             curve: Curves.easeOut);
       }
     });
+  }
+
+  void asyncLoadMoreData() async {
+    final messages = await db
+        .collection("message")
+        .doc(doc_id)
+        .collection("msglist")
+        .withConverter(
+            fromFirestore: Msgcontent.fromFirestore,
+            toFirestore: (Msgcontent msg, options) => msg.toFirestore())
+        .orderBy("addtime", descending: true)
+        .where("addtime", isLessThan: state.msgcontentList.value.last.addtime)
+        .limit(10)
+        .get();
+
+    if (messages.docs.isNotEmpty) {
+      messages.docs.forEach((element) {
+        var data = element.data();
+        state.msgcontentList.value.add(data);
+      });
+    }
+
+    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+      isLoadmore = true;
+    });
+    state.isLoading.value = false;
   }
 
   void sendMessage() async {
