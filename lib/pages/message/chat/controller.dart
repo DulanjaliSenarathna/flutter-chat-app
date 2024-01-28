@@ -101,6 +101,17 @@ class ChatController extends GetxController {
             curve: Curves.easeOut);
       }
     });
+
+    myScrollController.addListener(() {
+      if (myScrollController.offset + 20 >
+          myScrollController.position.maxScrollExtent) {
+        if (isLoadmore) {
+          state.isLoading.value = true;
+          isLoadmore = false;
+          asyncLoadMoreData();
+        }
+      }
+    });
   }
 
   void asyncLoadMoreData() async {
