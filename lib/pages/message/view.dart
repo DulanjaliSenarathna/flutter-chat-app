@@ -77,6 +77,14 @@ class MessagePage extends GetView<MessageController> {
     ));
   }
 
+  Widget _headTabs() {
+    return Container(
+      height: 70,
+      width: 300,
+      color: Colors.red,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -90,6 +98,10 @@ class MessagePage extends GetView<MessageController> {
                 pinned: true,
                 title: _headBar(),
               ),
+              SliverPadding(
+                padding: EdgeInsets.symmetric(vertical: 0.w, horizontal: 0.w),
+                sliver: SliverToBoxAdapter(child: _headTabs()),
+              )
             ],
           ),
           Positioned(
