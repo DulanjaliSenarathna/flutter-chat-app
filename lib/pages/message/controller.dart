@@ -21,6 +21,10 @@ class MessageController extends GetxController {
     firebaseMessageSetup();
   }
 
+  goTabStatus() {
+    state.tabStatus.value = !state.tabStatus.value;
+  }
+
   @override
   void onInit() {
     // TODO: implement onInit

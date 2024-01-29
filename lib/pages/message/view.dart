@@ -13,8 +13,9 @@ class MessagePage extends GetView<MessageController> {
     return Center(
         child: Container(
       width: 280.w,
-      height: 56.w,
-      margin: EdgeInsets.only(bottom: 20.h, top: 20.h),
+      height: 66.w,
+      padding: EdgeInsets.only(bottom: 15),
+      margin: EdgeInsets.only(bottom: 20.h, top: 40.h),
       child: Row(
         children: [
           Stack(
@@ -78,10 +79,86 @@ class MessagePage extends GetView<MessageController> {
   }
 
   Widget _headTabs() {
-    return Container(
-      height: 70,
-      width: 300,
-      color: Colors.red,
+    return Center(
+      child: Container(
+        height: 48.h,
+        width: 320.w,
+        margin: const EdgeInsets.only(top: 10),
+        decoration: const BoxDecoration(
+            color: AppColors.primarySecondaryBackground,
+            borderRadius: BorderRadius.all(Radius.circular(5))),
+        padding: EdgeInsets.all(4.w),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            GestureDetector(
+              onTap: () {
+                controller.goTabStatus();
+              },
+              child: Container(
+                  width: 150.w,
+                  height: 40.h,
+                  decoration: controller.state.tabStatus.value
+                      ? BoxDecoration(
+                          color: AppColors.primaryBackground,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(5)),
+                          boxShadow: [
+                              BoxShadow(
+                                  color: Colors.grey.withOpacity(0.1),
+                                  spreadRadius: 2,
+                                  blurRadius: 3,
+                                  offset: const Offset(0, 2))
+                            ])
+                      : BoxDecoration(),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Chat",
+                        style: TextStyle(
+                            color: AppColors.primaryThreeElementText,
+                            fontWeight: FontWeight.normal,
+                            fontSize: 14.sp),
+                      ),
+                    ],
+                  )),
+            ),
+            GestureDetector(
+              onTap: () {
+                controller.goTabStatus();
+              },
+              child: Container(
+                  width: 150.w,
+                  height: 40.h,
+                  decoration: controller.state.tabStatus.value?BoxDecoration():
+                   BoxDecoration(
+                          color: AppColors.primaryBackground,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(5)),
+                          boxShadow: [
+                              BoxShadow(
+                                  color: Colors.grey.withOpacity(0.1),
+                                  spreadRadius: 2,
+                                  blurRadius: 3,
+                                  offset: const Offset(0, 2))
+                            ]),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Call",
+                        style: TextStyle(
+                            color: AppColors.primaryThreeElementText,
+                            fontWeight: FontWeight.normal,
+                            fontSize: 14.sp),
+                      ),
+                    ],
+                  )),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -122,7 +199,7 @@ class MessagePage extends GetView<MessageController> {
                             color: Colors.grey.withOpacity(0.2),
                             spreadRadius: 2,
                             blurRadius: 2,
-                            offset: Offset(1, 1))
+                            offset: const Offset(1, 1))
                       ]),
                   child: Image.asset("assets/icons/contact.png"),
                 ),
