@@ -141,17 +141,10 @@ class ChatController extends GetxController {
     }
   }
 
-  
   void sendImageMessage(String url) async {
-    
-   
-
     //Created an object to send to firebase
     final content = Msgcontent(
-        token: token,
-        content: url,
-        type: "image",
-        addtime: Timestamp.now());
+        token: token, content: url, type: "image", addtime: Timestamp.now());
 
     db
         .collection('message')
@@ -163,7 +156,6 @@ class ChatController extends GetxController {
         .add(content)
         .then((DocumentReference doc) {
       print('..... base id is $doc_id, new img docid is ${doc.id}');
-      
     });
 
     //collection().get().docs.data()
@@ -194,7 +186,10 @@ class ChatController extends GetxController {
     }
   }
 
-
+  void closeAllPop() async {
+    Get.focusScope?.unfocus();
+    state.more_status.value = false;
+  }
 
   void asyncLoadMoreData() async {
     final messages = await db

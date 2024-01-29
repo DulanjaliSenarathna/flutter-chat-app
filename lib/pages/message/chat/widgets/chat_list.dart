@@ -12,33 +12,40 @@ class ChatList extends GetView<ChatController> {
   Widget build(BuildContext context) {
     return Obx(() => Container(
           padding: EdgeInsets.only(bottom: 70.w),
-          child: CustomScrollView(
-            controller: controller.myScrollController,
-            reverse: true,
-            slivers: [
-              SliverPadding(
-                padding: EdgeInsets.symmetric(vertical: 0.w, horizontal: 0.w),
-                sliver: SliverList(
-                    delegate: SliverChildBuilderDelegate((context, index) {
-                  var item = controller.state.msgcontentList[index];
-                  if (controller.token == item.token) {
-                    //user token with msglist token
-                    return ChatRightList(item);
-                  } else {
-                    return ChatLeftList(item);
-                  }
-                }, childCount: controller.state.msgcontentList.length)),
-              ),
-              SliverPadding(padding: EdgeInsets.symmetric(
-                vertical: 0.w,horizontal: 0.w),
-                sliver: SliverToBoxAdapter(
-                  child: controller.state.isLoading.value? const Align(
-                    alignment: Alignment.center,
-                    child: Text('Loading...'),
-                  ):Container(),
+          child: GestureDetector(
+            child: CustomScrollView(
+              controller: controller.myScrollController,
+              reverse: true,
+              slivers: [
+                SliverPadding(
+                  padding: EdgeInsets.symmetric(vertical: 0.w, horizontal: 0.w),
+                  sliver: SliverList(
+                      delegate: SliverChildBuilderDelegate((context, index) {
+                    var item = controller.state.msgcontentList[index];
+                    if (controller.token == item.token) {
+                      //user token with msglist token
+                      return ChatRightList(item);
+                    } else {
+                      return ChatLeftList(item);
+                    }
+                  }, childCount: controller.state.msgcontentList.length)),
                 ),
-              )
-            ],
+                SliverPadding(
+                  padding: EdgeInsets.symmetric(vertical: 0.w, horizontal: 0.w),
+                  sliver: SliverToBoxAdapter(
+                    child: controller.state.isLoading.value
+                        ? const Align(
+                            alignment: Alignment.center,
+                            child: Text('Loading...'),
+                          )
+                        : Container(),
+                  ),
+                )
+              ],
+            ),
+            onTap: () {
+              controller.closeAllPop();
+            },
           ),
         ));
   }
