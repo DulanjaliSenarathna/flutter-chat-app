@@ -1,6 +1,7 @@
 import 'package:chatty/common/apis/apis.dart';
 import 'package:chatty/common/entities/base.dart';
 import 'package:chatty/common/routes/names.dart';
+import 'package:chatty/common/store/store.dart';
 import 'package:chatty/pages/message/state.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
@@ -18,6 +19,19 @@ class MessageController extends GetxController {
   void onReady() {
     super.onReady();
     firebaseMessageSetup();
+  }
+
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+    getProfile();
+  }
+
+  void getProfile() async {
+    var profile = await UserStore.to.profile;
+    state.head_detail.value = profile;
+    state.head_detail.refresh();
   }
 
   firebaseMessageSetup() async {
