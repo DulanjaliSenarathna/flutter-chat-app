@@ -1,6 +1,6 @@
-import 'package:chatty/common/values/colors.dart';
-import 'package:chatty/pages/contact/controller.dart';
-import 'package:chatty/pages/contact/widgets/contact_list.dart';
+import 'package:jengo/common/values/colors.dart';
+import 'package:jengo/pages/contact/controller.dart';
+import 'package:jengo/pages/contact/widgets/contact_list.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,10 +14,9 @@ class ContactPage extends GetView<ContactController> {
       title: Text(
         "Contact",
         style: TextStyle(
-          color: AppColors.primaryText,
-          fontSize: 16.sp,
-          fontWeight: FontWeight.normal
-        ),
+            color: AppColors.primaryText,
+            fontSize: 16.sp,
+            fontWeight: FontWeight.normal),
       ),
     );
   }
@@ -25,13 +24,8 @@ class ContactPage extends GetView<ContactController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       appBar: _buildAppBar(),
-      body: Container(
-        width: 360.w,
-        height: 780.h,
-        child: ContactList()
-      ),
+      body: Container(width: 360.w, height: 780.h, child: ContactList()),
     );
   }
 }

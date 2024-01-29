@@ -1,5 +1,6 @@
-import 'package:chatty/common/values/colors.dart';
-import 'package:chatty/pages/profile/controller.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:jengo/common/values/colors.dart';
+import 'package:jengo/pages/profile/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -35,12 +36,29 @@ class ProfilePage extends GetView<ProfileController> {
                     blurRadius: 2,
                     offset: const Offset(0, 1))
               ]),
-          child: Image(
+          child: controller.state.profile_detail.value.avatar!=null ? CachedNetworkImage(
+                          imageUrl: controller.state.profile_detail.value.avatar!,
+                          height: 120.w,
+                          width: 120.w,
+                          imageBuilder: (context, imageProvider) => Container(
+                            decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(60.w)),
+                                image: DecorationImage(
+                                    image: imageProvider, fit: BoxFit.fill)),
+                          ),
+                          errorWidget: (context, url, error) => const Image(
+                            image:
+                                AssetImage("assets/images/account_header.png"),
+                          ),
+                        ):
+          Image(
               width: 120.w,
               height: 120.h,
               fit: BoxFit.cover,
               image: const AssetImage("assets/images/account_header.png")),
         ),
+        
         Positioned(
             bottom: 0.w,
             right: 0.w,
@@ -55,8 +73,7 @@ class ProfilePage extends GetView<ProfileController> {
                     borderRadius: BorderRadius.all(Radius.circular(40.w))),
                 child: Image.asset("assets/icons/edit.png"),
               ),
-            )
-          )
+            ))
       ],
     );
   }

@@ -1,6 +1,6 @@
-import 'package:chatty/common/entities/entities.dart';
-import 'package:chatty/common/utils/utils.dart';
-import 'package:chatty/common/values/values.dart';
+import 'package:jengo/common/entities/entities.dart';
+import 'package:jengo/common/utils/utils.dart';
+import 'package:jengo/common/values/values.dart';
 
 class UserAPI {
   static Future<UserLoginResponseEntity> Login({
@@ -19,6 +19,7 @@ class UserAPI {
     );
     return UserLoginResponseEntity.fromJson(response);
   }
+
   static Future<BaseResponseEntity> UpdateProfile({
     LoginRequestEntity? params,
   }) async {
@@ -28,6 +29,4 @@ class UserAPI {
     );
     return BaseResponseEntity.fromJson(response);
   }
-
-
 }

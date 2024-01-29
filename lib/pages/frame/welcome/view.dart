@@ -1,5 +1,5 @@
-import 'package:chatty/common/values/colors.dart';
-import 'package:chatty/pages/frame/welcome/controller.dart';
+import 'package:jengo/common/values/colors.dart';
+import 'package:jengo/pages/frame/welcome/controller.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,19 +10,17 @@ class WelcomePage extends GetView<WelcomeController> {
 
   Widget _buildPageHeadTitle(String title) {
     return Container(
-      margin: EdgeInsets.only(top: 350),
+        margin: EdgeInsets.only(top: 350),
         child: Text(
-      title,
-      textAlign: TextAlign.center,
-      style:  TextStyle(
-        color: AppColors.primaryElementText,
-        fontFamily: "Montserrat",
-        fontWeight: FontWeight.bold,
-        fontSize: 45.sp
-      ),
-    )
-  );
-}
+          title,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              color: AppColors.primaryElementText,
+              fontFamily: "Montserrat",
+              fontWeight: FontWeight.bold,
+              fontSize: 45.sp),
+        ));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +28,7 @@ class WelcomePage extends GetView<WelcomeController> {
       backgroundColor: AppColors.primaryElement,
       body: Container(
         width: 360.w,
-        height:780.h,
+        height: 780.h,
         child: _buildPageHeadTitle(controller.title),
       ),
     );

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:chatty/common/values/values.dart';
+import 'package:jengo/common/values/values.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 ///

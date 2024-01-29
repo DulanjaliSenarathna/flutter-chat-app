@@ -1,11 +1,12 @@
-import 'package:chatty/common/entities/entities.dart';
+import 'package:jengo/common/entities/entities.dart';
+
 //https://github.com/HeySreelal/countrycodes
 class Countries {
   static List<Country> get list => _list;
 
   static Country findByCode(String code) {
     return _list.firstWhere(
-          (country) => country.code == code,
+      (country) => country.code == code,
       orElse: () {
         throw Exception('Could not find country by name code: $code');
       },
@@ -14,7 +15,7 @@ class Countries {
 
   static Country findByName(String name) {
     return _list.firstWhere(
-          (country) => country.name == name,
+      (country) => country.name == name,
       orElse: () {
         throw Exception('Could not find country by name: $name');
       },
@@ -23,7 +24,7 @@ class Countries {
 
   static Country? findByDialCode(String code) {
     return _list.firstWhere(
-          (country) => country.dialCode == code,
+      (country) => country.dialCode == code,
       orElse: () {
         throw Exception('Invalid dial code: $code');
       },

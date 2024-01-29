@@ -1,8 +1,8 @@
-import 'package:chatty/common/apis/contact.dart';
-import 'package:chatty/common/entities/contact.dart';
-import 'package:chatty/common/entities/msg.dart';
-import 'package:chatty/common/store/store.dart';
-import 'package:chatty/pages/contact/state.dart';
+import 'package:jengo/common/apis/contact.dart';
+import 'package:jengo/common/entities/contact.dart';
+import 'package:jengo/common/entities/msg.dart';
+import 'package:jengo/common/store/store.dart';
+import 'package:jengo/pages/contact/state.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -69,42 +69,32 @@ class ContactController extends GetxController {
               toFirestore: (Msg msg, options) => msg.toFirestore())
           .add(msgdata);
 
-      Get.offAllNamed(
-        "/chat",
-        parameters: {
-          "doc_id": doc_id.id,
-          "to_token":contactItem.token??"",
-          "to_name":contactItem.name??"",
-          "to_avatar":contactItem.avatar??"",
-          "to_online":contactItem.online.toString(),
-        }
-      );
-      
+      Get.offAllNamed("/chat", parameters: {
+        "doc_id": doc_id.id,
+        "to_token": contactItem.token ?? "",
+        "to_name": contactItem.name ?? "",
+        "to_avatar": contactItem.avatar ?? "",
+        "to_online": contactItem.online.toString(),
+      });
     } else {
-      if(from_messages.docs.isNotEmpty){
-        Get.toNamed(
-        "/chat",
-        parameters: {
+      if (from_messages.docs.isNotEmpty) {
+        Get.toNamed("/chat", parameters: {
           "doc_id": from_messages.docs.first.id,
-          "to_token":contactItem.token??"",
-          "to_name":contactItem.name??"",
-          "to_avatar":contactItem.avatar??"",
-          "to_online":contactItem.online.toString(),
-        }
-      );
+          "to_token": contactItem.token ?? "",
+          "to_name": contactItem.name ?? "",
+          "to_avatar": contactItem.avatar ?? "",
+          "to_online": contactItem.online.toString(),
+        });
       }
 
-      if(to_messages.docs.isNotEmpty){
-        Get.toNamed(
-        "/chat",
-        parameters: {
+      if (to_messages.docs.isNotEmpty) {
+        Get.toNamed("/chat", parameters: {
           "doc_id": to_messages.docs.first.id,
-          "to_token":contactItem.token??"",
-          "to_name":contactItem.name??"",
-          "to_avatar":contactItem.avatar??"",
-          "to_online":contactItem.online.toString(),
-        }
-      );
+          "to_token": contactItem.token ?? "",
+          "to_name": contactItem.name ?? "",
+          "to_avatar": contactItem.avatar ?? "",
+          "to_online": contactItem.online.toString(),
+        });
       }
     }
   }

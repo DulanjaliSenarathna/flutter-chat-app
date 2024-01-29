@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:chatty/common/services/services.dart';
-import 'package:chatty/common/values/values.dart';
+import 'package:jengo/common/services/services.dart';
+import 'package:jengo/common/values/values.dart';
 import 'package:get/get.dart';
 import 'package:package_info/package_info.dart';
 
@@ -18,11 +18,11 @@ class ConfigStore extends GetxController {
     Locale('zh', 'CN'),
   ];
 
-
   @override
   void onInit() {
     super.onInit();
-  ///  isFirstOpen = StorageService.to.getBool(STORAGE_DEVICE_FIRST_OPEN_KEY);
+
+    ///  isFirstOpen = StorageService.to.getBool(STORAGE_DEVICE_FIRST_OPEN_KEY);
   }
 
   Future<void> getPlatform() async {

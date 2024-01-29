@@ -4,13 +4,12 @@ import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
 import 'package:dio/adapter.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
-import 'package:chatty/common/store/store.dart';
-import 'package:chatty/common/utils/utils.dart';
-import 'package:chatty/common/values/values.dart';
+import 'package:jengo/common/store/store.dart';
+import 'package:jengo/common/utils/utils.dart';
+import 'package:jengo/common/values/values.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart' hide FormData;
-
 
 class HttpUtil {
   static HttpUtil _instance = HttpUtil._internal();
@@ -18,7 +17,6 @@ class HttpUtil {
 
   late Dio dio;
   CancelToken cancelToken = new CancelToken();
-
 
   HttpUtil._internal() {
     // BaseOptions、Options、RequestOptions Parameters can be configured，Priority levels increase in sequence，and can override parameters based on priority level
@@ -137,23 +135,31 @@ class HttpUtil {
             // return ErrorEntity(code: errCode, message: errMsg);
             switch (errCode) {
               case 400:
-                return ErrorEntity(code: errCode, message: "Request syntax error");
+                return ErrorEntity(
+                    code: errCode, message: "Request syntax error");
               case 401:
                 return ErrorEntity(code: errCode, message: "permission denied");
               case 403:
-                return ErrorEntity(code: errCode, message: "Server refuses to execute");
+                return ErrorEntity(
+                    code: errCode, message: "Server refuses to execute");
               case 404:
-                return ErrorEntity(code: errCode, message: "can not reach server");
+                return ErrorEntity(
+                    code: errCode, message: "can not reach server");
               case 405:
-                return ErrorEntity(code: errCode, message: "Request method is forbidden");
+                return ErrorEntity(
+                    code: errCode, message: "Request method is forbidden");
               case 500:
-                return ErrorEntity(code: errCode, message: "Server internal error");
+                return ErrorEntity(
+                    code: errCode, message: "Server internal error");
               case 502:
                 return ErrorEntity(code: errCode, message: "Invalid request");
               case 503:
-                return ErrorEntity(code: errCode, message: "The server is down");
+                return ErrorEntity(
+                    code: errCode, message: "The server is down");
               case 505:
-                return ErrorEntity(code: errCode, message: "HTTP protocol requests are not supported");
+                return ErrorEntity(
+                    code: errCode,
+                    message: "HTTP protocol requests are not supported");
               default:
                 {
                   // return ErrorEntity(code: errCode, message: "unknown error");
@@ -244,7 +250,6 @@ class HttpUtil {
     Map<String, dynamic>? queryParameters,
     Options? options,
   }) async {
-
     Options requestOptions = options ?? Options();
     requestOptions.headers = requestOptions.headers ?? {};
     Map<String, dynamic>? authorization = getAuthorizationHeader();

@@ -1,8 +1,8 @@
-import 'package:chatty/common/apis/apis.dart';
-import 'package:chatty/common/entities/base.dart';
-import 'package:chatty/common/routes/names.dart';
-import 'package:chatty/common/store/store.dart';
-import 'package:chatty/pages/message/state.dart';
+import 'package:jengo/common/apis/apis.dart';
+import 'package:jengo/common/entities/base.dart';
+import 'package:jengo/common/routes/names.dart';
+import 'package:jengo/common/store/store.dart';
+import 'package:jengo/pages/message/state.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
 import 'package:get/get.dart';
@@ -12,7 +12,7 @@ class MessageController extends GetxController {
   final state = MessageState();
 
   void goProfile() async {
-    await Get.toNamed(AppRoutes.Profile);
+    await Get.toNamed(AppRoutes.Profile, arguments: state.head_detail.value);
   }
 
   @override

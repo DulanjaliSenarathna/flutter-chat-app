@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:chatty/common/values/values.dart';
+import 'package:jengo/common/values/values.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 
 /// 输入框
 Widget inputTextEdit({
@@ -26,14 +25,14 @@ Widget inputTextEdit({
       borderRadius: Radii.k6pxRadius,
     ),
     child: TextField(
-      scrollPadding:EdgeInsets.zero,
+      scrollPadding: EdgeInsets.zero,
       autofocus: autofocus,
       controller: controller,
       keyboardType: keyboardType,
       decoration: InputDecoration(
         hintText: hintText,
         suffixIcon: ClearWidget,
-        hintStyle:TextStyle(color: AppColors.thirdElementText),
+        hintStyle: TextStyle(color: AppColors.thirdElementText),
         contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 0),
         isDense: true,
         border: InputBorder.none,
@@ -44,7 +43,7 @@ Widget inputTextEdit({
         fontSize: 16.sp,
       ),
       maxLines: 1,
-      textAlign:textAlign??TextAlign.start,
+      textAlign: textAlign ?? TextAlign.start,
       autocorrect: false, // 自动纠正
       readOnly: readOnly, //
       obscureText: isPassword, // 隐藏输入内容, 密码框
@@ -76,7 +75,7 @@ Widget inputTextAreaEdit({
       keyboardType: keyboardType,
       decoration: InputDecoration(
         hintText: hintText,
-        hintStyle:TextStyle(color: AppColors.thirdElementText),
+        hintStyle: TextStyle(color: AppColors.thirdElementText),
         contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         border: InputBorder.none,
       ),
@@ -141,4 +140,3 @@ Widget inputEmailEdit({
     ),
   );
 }
-
