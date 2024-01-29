@@ -203,11 +203,13 @@ class ChatPage extends GetView<ChatController> {
                                         color: Colors.grey.withOpacity(0.2),
                                         spreadRadius: 2,
                                         blurRadius: 2,
-                                        offset: Offset(1, 1))
+                                        offset: const Offset(1, 1))
                                   ]),
                               child: Image.asset("assets/icons/photo.png"),
                             ),
-                            onTap: () {},
+                            onTap: () {
+                              controller.imgFromGallery();
+                            },
                           ),
                           GestureDetector(
                             child: Container(
