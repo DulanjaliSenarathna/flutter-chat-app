@@ -1,8 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chatty/common/entities/entities.dart';
 import 'package:chatty/common/routes/names.dart';
+import 'package:chatty/common/utils/utils.dart';
 import 'package:chatty/common/values/colors.dart';
 import 'package:chatty/pages/message/controller.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -245,22 +247,33 @@ class MessagePage extends GetView<MessageController> {
                   height: 44.w,
                   child: Column(
                     children: [
+                      Text(
+                        item.last_time==null?"":duTimeLineFormat((item.last_time as Timestamp).toDate()),
+                        maxLines: 1,
+                          softWrap: false,
+                          style: TextStyle(
+                          fontFamily: "Avenir",
+                          fontWeight: FontWeight.normal,
+                          color: AppColors.primaryElementText,
+                          fontSize: 11.sp
+                        ),
+                      ),
                       item.msg_num == 0 ? Container():Container(
                         decoration: const BoxDecoration(
                           color: Colors.blue,
                           
-                          borderRadius: BorderRadius.all(Radius.circular(20))
+                          borderRadius: BorderRadius.all(Radius.circular(10))
                         ),
-                        padding: const EdgeInsets.all(3),
+                        padding: EdgeInsets.only(left: 4.w,right: 4.w),
                         child: Text(
                           "${item.msg_num}",
                           maxLines: 1,
                           softWrap: false,
                           style: TextStyle(
                           fontFamily: "Avenir",
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.normal,
                           color: AppColors.primaryElementText,
-                          fontSize: 10.sp
+                          fontSize: 11.sp
                         ),
                         ),
                       )

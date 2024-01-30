@@ -8,6 +8,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:flutter_localizations/flutter_localizations.dart'; 
 
 Future<void> main() async {
   await Global.init();
@@ -45,6 +46,11 @@ class MyApp extends StatelessWidget {
               initialRoute: AppPages.INITIAL,
               getPages: AppPages.routes,
               builder: EasyLoading.init(),
+              localizationsDelegates: const [
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate
+              ],
             ));
   }
 }
