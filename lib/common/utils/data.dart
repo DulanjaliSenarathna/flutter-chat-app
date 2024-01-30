@@ -1,4 +1,4 @@
-import 'package:jengo/common/entities/entities.dart';
+import 'package:chatty/common/entities/entities.dart';
 
 //https://github.com/HeySreelal/countrycodes
 class Countries {

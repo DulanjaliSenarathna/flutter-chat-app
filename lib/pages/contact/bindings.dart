@@ -1,4 +1,4 @@
-import 'package:jengo/pages/contact/controller.dart';
+import 'package:chatty/pages/contact/controller.dart';
 import 'package:get/get.dart';
 
 class ContactBinding implements Bindings {

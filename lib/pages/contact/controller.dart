@@ -1,8 +1,8 @@
-import 'package:jengo/common/apis/contact.dart';
-import 'package:jengo/common/entities/contact.dart';
-import 'package:jengo/common/entities/msg.dart';
-import 'package:jengo/common/store/store.dart';
-import 'package:jengo/pages/contact/state.dart';
+import 'package:chatty/common/apis/contact.dart';
+import 'package:chatty/common/entities/contact.dart';
+import 'package:chatty/common/entities/msg.dart';
+import 'package:chatty/common/store/store.dart';
+import 'package:chatty/pages/contact/state.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';

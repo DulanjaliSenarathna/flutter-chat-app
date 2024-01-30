@@ -1,6 +1,6 @@
-import 'package:jengo/common/values/colors.dart';
-import 'package:jengo/pages/contact/controller.dart';
-import 'package:jengo/pages/contact/widgets/contact_list.dart';
+import 'package:chatty/common/values/colors.dart';
+import 'package:chatty/pages/contact/controller.dart';
+import 'package:chatty/pages/contact/widgets/contact_list.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

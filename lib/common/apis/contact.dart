@@ -1,5 +1,5 @@
-import 'package:jengo/common/entities/entities.dart';
-import 'package:jengo/common/utils/utils.dart';
+import 'package:chatty/common/entities/entities.dart';
+import 'package:chatty/common/utils/utils.dart';
 
 class ContactAPI {
   /// Turn page
@@ -10,6 +10,4 @@ class ContactAPI {
     );
     return ContactResponseEntity.fromJson(response);
   }
-
-
 }

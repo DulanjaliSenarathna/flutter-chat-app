@@ -1,4 +1,4 @@
-name: jengo
+name: chatty
 description: A new Flutter project.
 
 # The following line prevents the package from being accidentally published to
@@ -31,6 +31,7 @@ dependencies:
 
   # pull to refresh
   pull_to_refresh: ^2.0.0
+  
 
   # toast
   fluttertoast: ^8.0.9

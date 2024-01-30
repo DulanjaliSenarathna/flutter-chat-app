@@ -1,12 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:ui';
-import 'package:jengo/common/apis/apis.dart';
-import 'package:jengo/common/entities/entities.dart';
-import 'package:jengo/common/routes/names.dart';
-import 'package:jengo/common/store/store.dart';
-import 'package:jengo/common/values/values.dart';
-import 'package:jengo/firebase_options.dart';
+import 'package:chatty/common/apis/apis.dart';
+import 'package:chatty/common/entities/entities.dart';
+import 'package:chatty/common/routes/names.dart';
+import 'package:chatty/common/store/store.dart';
+import 'package:chatty/common/values/values.dart';
+import 'package:chatty/firebase_options.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -21,7 +21,7 @@ class FirebaseMassagingHandler {
   static AndroidNotificationChannel channel_call =
       const AndroidNotificationChannel(
     'com.dbestech.chatty.call', // id
-    'jengo_call', // title
+    'chatty_call', // title
     importance: Importance.max,
     enableLights: true,
     playSound: true,
@@ -30,7 +30,7 @@ class FirebaseMassagingHandler {
   static AndroidNotificationChannel channel_message =
       const AndroidNotificationChannel(
     'com.dbestech.chatty.message', // id
-    'jengo_message', // title
+    'chatty_message', // title
     importance: Importance.defaultImportance,
     enableLights: true,
     playSound: true,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:jengo/common/services/services.dart';
-import 'package:jengo/common/values/values.dart';
+import 'package:chatty/common/services/services.dart';
+import 'package:chatty/common/values/values.dart';
 import 'package:get/get.dart';
 import 'package:package_info/package_info.dart';
 

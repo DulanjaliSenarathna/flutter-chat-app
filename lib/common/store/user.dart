@@ -1,8 +1,8 @@
 import 'dart:convert';
-import 'package:jengo/common/entities/entities.dart';
-import 'package:jengo/common/routes/names.dart';
-import 'package:jengo/common/services/services.dart';
-import 'package:jengo/common/values/values.dart';
+import 'package:chatty/common/entities/entities.dart';
+import 'package:chatty/common/routes/names.dart';
+import 'package:chatty/common/services/services.dart';
+import 'package:chatty/common/values/values.dart';
 import 'package:get/get.dart';
 
 class UserStore extends GetxController {

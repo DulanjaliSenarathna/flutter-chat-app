@@ -1,14 +1,14 @@
-import 'package:jengo/pages/frame/welcome/index.dart';
-import 'package:jengo/pages/frame/sign_in/index.dart';
-import 'package:jengo/pages/message/chat/index.dart';
-import 'package:jengo/pages/message/voicecall/index.dart';
+import 'package:chatty/pages/frame/welcome/index.dart';
+import 'package:chatty/pages/frame/sign_in/index.dart';
+import 'package:chatty/pages/message/chat/index.dart';
+import 'package:chatty/pages/message/voicecall/index.dart';
 
-import 'package:jengo/pages/message/index.dart';
-import 'package:jengo/pages/profile/index.dart';
-import 'package:jengo/pages/contact/index.dart';
+import 'package:chatty/pages/message/index.dart';
+import 'package:chatty/pages/profile/index.dart';
+import 'package:chatty/pages/contact/index.dart';
 
 import 'package:flutter/material.dart';
-import 'package:jengo/common/middlewares/middlewares.dart';
+import 'package:chatty/common/middlewares/middlewares.dart';
 
 import 'package:get/get.dart';
 

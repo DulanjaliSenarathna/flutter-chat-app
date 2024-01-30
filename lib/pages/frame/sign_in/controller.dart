@@ -1,12 +1,12 @@
 import 'dart:convert';
 
-import 'package:jengo/common/entities/entities.dart';
-import 'package:jengo/common/store/user.dart';
-import 'package:jengo/common/apis/user.dart';
-import 'package:jengo/common/utils/http.dart';
-import 'package:jengo/common/routes/names.dart';
-import 'package:jengo/common/widgets/toast.dart';
-import 'package:jengo/pages/frame/sign_in/state.dart';
+import 'package:chatty/common/entities/entities.dart';
+import 'package:chatty/common/store/user.dart';
+import 'package:chatty/common/apis/user.dart';
+import 'package:chatty/common/utils/http.dart';
+import 'package:chatty/common/routes/names.dart';
+import 'package:chatty/common/widgets/toast.dart';
+import 'package:chatty/pages/frame/sign_in/state.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';

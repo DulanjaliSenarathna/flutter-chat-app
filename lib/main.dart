@@ -1,7 +1,7 @@
-import 'package:jengo/common/routes/pages.dart';
-import 'package:jengo/common/style/style.dart';
-import 'package:jengo/common/utils/FirebaseMassagingHandler.dart';
-import 'package:jengo/global.dart';
+import 'package:chatty/common/routes/pages.dart';
+import 'package:chatty/common/style/style.dart';
+import 'package:chatty/common/utils/FirebaseMassagingHandler.dart';
+import 'package:chatty/global.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';

@@ -1,11 +1,11 @@
 import 'dart:io';
 
-import 'package:jengo/common/apis/apis.dart';
-import 'package:jengo/common/entities/entities.dart';
-import 'package:jengo/common/routes/names.dart';
-import 'package:jengo/common/store/store.dart';
-import 'package:jengo/common/widgets/toast.dart';
-import 'package:jengo/pages/message/chat/state.dart';
+import 'package:chatty/common/apis/apis.dart';
+import 'package:chatty/common/entities/entities.dart';
+import 'package:chatty/common/routes/names.dart';
+import 'package:chatty/common/store/store.dart';
+import 'package:chatty/common/widgets/toast.dart';
+import 'package:chatty/pages/message/chat/state.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';

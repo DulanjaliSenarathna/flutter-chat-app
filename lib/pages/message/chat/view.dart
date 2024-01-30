@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:jengo/common/values/colors.dart';
-import 'package:jengo/pages/message/chat/controller.dart';
-import 'package:jengo/pages/message/chat/widgets/chat_list.dart';
+import 'package:chatty/common/values/colors.dart';
+import 'package:chatty/pages/message/chat/controller.dart';
+import 'package:chatty/pages/message/chat/widgets/chat_list.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

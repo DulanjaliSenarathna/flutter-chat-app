@@ -1,7 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:jengo/common/routes/names.dart';
-import 'package:jengo/common/values/colors.dart';
-import 'package:jengo/pages/message/controller.dart';
+import 'package:chatty/common/entities/entities.dart';
+import 'package:chatty/common/routes/names.dart';
+import 'package:chatty/common/values/colors.dart';
+import 'package:chatty/pages/message/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -79,83 +80,139 @@ class MessagePage extends GetView<MessageController> {
   }
 
   Widget _headTabs() {
-    return Center(
-      child: Container(
-        height: 48.h,
-        width: 320.w,
-        margin: const EdgeInsets.only(top: 10),
-        decoration: const BoxDecoration(
-            color: AppColors.primarySecondaryBackground,
-            borderRadius: BorderRadius.all(Radius.circular(5))),
-        padding: EdgeInsets.all(4.w),
+    return Container(
+      height: 48.h,
+      width: 320.w,
+      margin: const EdgeInsets.only(top: 10),
+      decoration: const BoxDecoration(
+          color: AppColors.primarySecondaryBackground,
+          borderRadius: BorderRadius.all(Radius.circular(5))),
+      padding: EdgeInsets.all(4.w),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          GestureDetector(
+            onTap: () {
+              controller.goTabStatus();
+            },
+            child: Container(
+                width: 150.w,
+                height: 40.h,
+                decoration: controller.state.tabStatus.value
+                    ? BoxDecoration(
+                        color: AppColors.primaryBackground,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(5)),
+                        boxShadow: [
+                            BoxShadow(
+                                color: Colors.grey.withOpacity(0.1),
+                                spreadRadius: 2,
+                                blurRadius: 3,
+                                offset: const Offset(0, 2))
+                          ])
+                    : BoxDecoration(),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Chat",
+                      style: TextStyle(
+                          color: AppColors.primaryThreeElementText,
+                          fontWeight: FontWeight.normal,
+                          fontSize: 14.sp),
+                    ),
+                  ],
+                )),
+          ),
+          GestureDetector(
+            onTap: () {
+              controller.goTabStatus();
+            },
+            child: Container(
+                width: 150.w,
+                height: 40.h,
+                decoration: controller.state.tabStatus.value
+                    ? BoxDecoration()
+                    : BoxDecoration(
+                        color: AppColors.primaryBackground,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(5)),
+                        boxShadow: [
+                            BoxShadow(
+                                color: Colors.grey.withOpacity(0.1),
+                                spreadRadius: 2,
+                                blurRadius: 3,
+                                offset: const Offset(0, 2))
+                          ]),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Call",
+                      style: TextStyle(
+                          color: AppColors.primaryThreeElementText,
+                          fontWeight: FontWeight.normal,
+                          fontSize: 14.sp),
+                    ),
+                  ],
+                )),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _chatListItem(Message item) {
+    return Container(
+      padding: EdgeInsets.only(top: 10.h,left: 0.w,bottom: 10.h, right: 0.w),
+      child: InkWell(
+        onTap: (){},
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            GestureDetector(
-              onTap: () {
-                controller.goTabStatus();
-              },
-              child: Container(
-                  width: 150.w,
-                  height: 40.h,
-                  decoration: controller.state.tabStatus.value
-                      ? BoxDecoration(
-                          color: AppColors.primaryBackground,
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(5)),
-                          boxShadow: [
-                              BoxShadow(
-                                  color: Colors.grey.withOpacity(0.1),
-                                  spreadRadius: 2,
-                                  blurRadius: 3,
-                                  offset: const Offset(0, 2))
-                            ])
-                      : BoxDecoration(),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Chat",
-                        style: TextStyle(
-                            color: AppColors.primaryThreeElementText,
-                            fontWeight: FontWeight.normal,
-                            fontSize: 14.sp),
-                      ),
-                    ],
-                  )),
+                Container(
+                  width: 44.h,
+                  height: 44.h,
+                  decoration: BoxDecoration(
+                      color: AppColors.primarySecondaryBackground,
+                      borderRadius: BorderRadius.all(Radius.circular(22.h)),
+                      boxShadow: [
+                        BoxShadow(
+                            color: Colors.grey.withOpacity(0.1),
+                            spreadRadius: 1,
+                            blurRadius: 2,
+                            offset: const Offset(0, 1))
+                      ]),
+                  child: item.avatar == null
+                      ? const Image(
+                          image: AssetImage("assets/images/account_header.png"))
+                      : CachedNetworkImage(
+                          imageUrl: item.avatar!,
+                          height: 44.w,
+                          width: 44.w,
+                          imageBuilder: (context, imageProvider) => Container(
+                            decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(22.w)),
+                                image: DecorationImage(
+                                    image: imageProvider, fit: BoxFit.fill)),
+                          ),
+                          errorWidget: (context, url, error) => const Image(
+                            image:
+                                AssetImage("assets/images/account_header.png"),
+                          ),
+                        ),
+                ),
+           
+           Container(
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 175.w,
+                  height: 44.w,
+                )
+              ],
             ),
-            GestureDetector(
-              onTap: () {
-                controller.goTabStatus();
-              },
-              child: Container(
-                  width: 150.w,
-                  height: 40.h,
-                  decoration: controller.state.tabStatus.value?BoxDecoration():
-                   BoxDecoration(
-                          color: AppColors.primaryBackground,
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(5)),
-                          boxShadow: [
-                              BoxShadow(
-                                  color: Colors.grey.withOpacity(0.1),
-                                  spreadRadius: 2,
-                                  blurRadius: 3,
-                                  offset: const Offset(0, 2))
-                            ]),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Call",
-                        style: TextStyle(
-                            color: AppColors.primaryThreeElementText,
-                            fontWeight: FontWeight.normal,
-                            fontSize: 14.sp),
-                      ),
-                    ],
-                  )),
-            ),
+           )
           ],
         ),
       ),
@@ -168,6 +225,7 @@ class MessagePage extends GetView<MessageController> {
         body: Obx(
       () => SafeArea(
           child: Stack(
+        alignment: Alignment.center,
         children: [
           CustomScrollView(
             slivers: [
@@ -176,9 +234,21 @@ class MessagePage extends GetView<MessageController> {
                 title: _headBar(),
               ),
               SliverPadding(
-                padding: EdgeInsets.symmetric(vertical: 0.w, horizontal: 0.w),
+                padding: EdgeInsets.symmetric(vertical: 0.w, horizontal: 20.w),
                 sliver: SliverToBoxAdapter(child: _headTabs()),
-              )
+              ),
+              SliverPadding(
+                  padding: EdgeInsets.symmetric(vertical: 0.w, horizontal: 20.w),
+                  sliver: controller.state.tabStatus.value
+                      ? SliverList(
+                          delegate:
+                              SliverChildBuilderDelegate((context, index) {
+                          var item = controller.state.msgLlist[index];
+                          return _chatListItem(item);
+                        }, childCount: controller.state.msgLlist.length))
+                      : SliverToBoxAdapter(
+                          child: Container(),
+                        ))
             ],
           ),
           Positioned(
