@@ -12,6 +12,7 @@ class MessagePage extends GetView<MessageController> {
 
   Widget _headBar() {
     return Center(
+      
         child: Container(
       width: 280.w,
       height: 66.w,
@@ -209,6 +210,62 @@ class MessagePage extends GetView<MessageController> {
                 SizedBox(
                   width: 175.w,
                   height: 44.w,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "${item.name}",
+                        overflow: TextOverflow.clip,
+                        maxLines: 1,
+                        softWrap: false,
+                        style: TextStyle(
+                          fontFamily: "Avenir",
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.thirdElement,
+                          fontSize: 14.sp
+                        ),
+                        ),
+                      Text("${item.last_msg}",
+                      overflow: TextOverflow.clip,
+                        maxLines: 1,
+                        softWrap: false,
+                        style: TextStyle(
+                          fontFamily: "Avenir",
+                          fontWeight: FontWeight.normal,
+                          color: AppColors.primarySecondaryElementText,
+                          fontSize: 12.sp
+                        ),
+                      )
+                    ],
+                  ),
+                )
+                ,SizedBox(
+                  width: 86.w,
+                  height: 44.w,
+                  child: Column(
+                    children: [
+                      item.msg_num == 0 ? Container():Container(
+                        decoration: const BoxDecoration(
+                          color: Colors.blue,
+                          
+                          borderRadius: BorderRadius.all(Radius.circular(20))
+                        ),
+                        padding: const EdgeInsets.all(3),
+                        child: Text(
+                          "${item.msg_num}",
+                          maxLines: 1,
+                          softWrap: false,
+                          style: TextStyle(
+                          fontFamily: "Avenir",
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.primaryElementText,
+                          fontSize: 10.sp
+                        ),
+                        ),
+                      )
+                    ],
+                  ),
                 )
               ],
             ),
