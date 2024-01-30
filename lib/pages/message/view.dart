@@ -14,7 +14,6 @@ class MessagePage extends GetView<MessageController> {
 
   Widget _headBar() {
     return Center(
-      
         child: Container(
       width: 280.w,
       height: 66.w,
@@ -167,122 +166,138 @@ class MessagePage extends GetView<MessageController> {
 
   Widget _chatListItem(Message item) {
     return Container(
-      padding: EdgeInsets.only(top: 10.h,left: 0.w,bottom: 10.h, right: 0.w),
+      padding: EdgeInsets.only(top: 10.h, left: 0.w, bottom: 10.h, right: 0.w),
       child: InkWell(
-        onTap: (){},
+        onTap: () {
+          if (item.doc_id != null) {
+            Get.toNamed("/chat",
+            parameters: {
+              "doc_id":item.doc_id!,
+              "to_token":item.token!,
+              "to_name":item.name!,
+              "to_avatar":item.avatar!,
+              "to_online":item.online.toString()
+            }
+            );
+          }
+        },
         child: Row(
           children: [
-                Container(
-                  width: 44.h,
-                  height: 44.h,
-                  decoration: BoxDecoration(
-                      color: AppColors.primarySecondaryBackground,
-                      borderRadius: BorderRadius.all(Radius.circular(22.h)),
-                      boxShadow: [
-                        BoxShadow(
-                            color: Colors.grey.withOpacity(0.1),
-                            spreadRadius: 1,
-                            blurRadius: 2,
-                            offset: const Offset(0, 1))
-                      ]),
-                  child: item.avatar == null
-                      ? const Image(
-                          image: AssetImage("assets/images/account_header.png"))
-                      : CachedNetworkImage(
-                          imageUrl: item.avatar!,
-                          height: 44.w,
-                          width: 44.w,
-                          imageBuilder: (context, imageProvider) => Container(
-                            decoration: BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(22.w)),
-                                image: DecorationImage(
-                                    image: imageProvider, fit: BoxFit.fill)),
-                          ),
-                          errorWidget: (context, url, error) => const Image(
-                            image:
-                                AssetImage("assets/images/account_header.png"),
-                          ),
-                        ),
-                ),
-           
-           Container(
-            child: Row(
-              children: [
-                SizedBox(
-                  width: 175.w,
-                  height: 44.w,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "${item.name}",
-                        overflow: TextOverflow.clip,
-                        maxLines: 1,
-                        softWrap: false,
-                        style: TextStyle(
-                          fontFamily: "Avenir",
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.thirdElement,
-                          fontSize: 14.sp
-                        ),
-                        ),
-                      Text("${item.last_msg}",
-                      overflow: TextOverflow.clip,
-                        maxLines: 1,
-                        softWrap: false,
-                        style: TextStyle(
-                          fontFamily: "Avenir",
-                          fontWeight: FontWeight.normal,
-                          color: AppColors.primarySecondaryElementText,
-                          fontSize: 12.sp
-                        ),
-                      )
-                    ],
-                  ),
-                )
-                ,SizedBox(
-                  width: 86.w,
-                  height: 44.w,
-                  child: Column(
-                    children: [
-                      Text(
-                        item.last_time==null?"":duTimeLineFormat((item.last_time as Timestamp).toDate()),
-                        maxLines: 1,
-                          softWrap: false,
-                          style: TextStyle(
-                          fontFamily: "Avenir",
-                          fontWeight: FontWeight.normal,
-                          color: AppColors.primaryElementText,
-                          fontSize: 11.sp
-                        ),
+            Container(
+              width: 44.h,
+              height: 44.h,
+              margin: EdgeInsets.only(top: 0.h, left: 0.w, right: 10.w),
+              decoration: BoxDecoration(
+                  color: AppColors.primarySecondaryBackground,
+                  borderRadius: BorderRadius.all(Radius.circular(22.h)),
+                  boxShadow: [
+                    BoxShadow(
+                        color: Colors.grey.withOpacity(0.1),
+                        spreadRadius: 1,
+                        blurRadius: 2,
+                        offset: const Offset(0, 1))
+                  ]),
+              child: item.avatar == null
+                  ? const Image(
+                      image: AssetImage("assets/images/account_header.png"))
+                  : CachedNetworkImage(
+                      imageUrl: item.avatar!,
+                      height: 40.w,
+                      width: 40.w,
+                      imageBuilder: (context, imageProvider) => Container(
+                        decoration: BoxDecoration(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20.w)),
+                            image: DecorationImage(
+                                image: imageProvider, fit: BoxFit.fill)),
                       ),
-                      item.msg_num == 0 ? Container():Container(
-                        decoration: const BoxDecoration(
-                          color: Colors.blue,
-                          
-                          borderRadius: BorderRadius.all(Radius.circular(10))
-                        ),
-                        padding: EdgeInsets.only(left: 4.w,right: 4.w),
-                        child: Text(
-                          "${item.msg_num}",
+                      errorWidget: (context, url, error) => const Image(
+                        image: AssetImage("assets/images/account_header.png"),
+                      ),
+                    ),
+            ),
+            Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: 175.w,
+                    height: 44.w,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "${item.name}",
+                          overflow: TextOverflow.clip,
                           maxLines: 1,
                           softWrap: false,
                           style: TextStyle(
-                          fontFamily: "Avenir",
-                          fontWeight: FontWeight.normal,
-                          color: AppColors.primaryElementText,
-                          fontSize: 11.sp
+                              fontFamily: "Avenir",
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.thirdElement,
+                              fontSize: 14.sp),
                         ),
-                        ),
-                      )
-                    ],
+                        Text(
+                          "${item.last_msg}",
+                          overflow: TextOverflow.clip,
+                          maxLines: 1,
+                          softWrap: false,
+                          style: TextStyle(
+                              fontFamily: "Avenir",
+                              fontWeight: FontWeight.normal,
+                              color: AppColors.primarySecondaryElementText,
+                              fontSize: 12.sp),
+                        )
+                      ],
+                    ),
                   ),
-                )
-              ],
-            ),
-           )
+                  SizedBox(
+                    width: 86.w,
+                    height: 44.w,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          item.last_time == null
+                              ? ""
+                              : duTimeLineFormat(
+                                  (item.last_time as Timestamp).toDate()),
+                          maxLines: 1,
+                          softWrap: false,
+                          style: TextStyle(
+                              fontFamily: "Avenir",
+                              fontWeight: FontWeight.normal,
+                              color: AppColors.primaryElementText,
+                              fontSize: 11.sp),
+                        ),
+                        item.msg_num == 0
+                            ? Container()
+                            : Container(
+                                decoration: const BoxDecoration(
+                                    color: Colors.blue,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10))),
+                                padding: EdgeInsets.only(left: 4.w, right: 4.w),
+                                child: Text(
+                                  "${item.msg_num}",
+                                  maxLines: 1,
+                                  softWrap: false,
+                                  style: TextStyle(
+                                      fontFamily: "Avenir",
+                                      fontWeight: FontWeight.normal,
+                                      color: AppColors.primaryElementText,
+                                      fontSize: 11.sp),
+                                ),
+                              )
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            )
           ],
         ),
       ),
@@ -308,7 +323,8 @@ class MessagePage extends GetView<MessageController> {
                 sliver: SliverToBoxAdapter(child: _headTabs()),
               ),
               SliverPadding(
-                  padding: EdgeInsets.symmetric(vertical: 0.w, horizontal: 20.w),
+                  padding:
+                      EdgeInsets.symmetric(vertical: 0.w, horizontal: 20.w),
                   sliver: controller.state.tabStatus.value
                       ? SliverList(
                           delegate:
