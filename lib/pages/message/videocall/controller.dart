@@ -56,6 +56,8 @@ class VideoCallController extends GetxController {
     }, onUserJoined:
             (RtcConnection connection, int remoteUid, int elapsed) async {
       state.onRemortUID.value = remoteUid;
+
+      //since the other user joined, don't show the avatar anymore
       state.isShowAvatar.value = false;
       await player.pause();
     }, onLeaveChannel: (RtcConnection connection, RtcStats stats) {
