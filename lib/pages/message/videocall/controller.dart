@@ -78,7 +78,7 @@ class VideoCallController extends GetxController {
     await joinChannel();
     if (state.call_role == "anchor") {
       //send notification to the other user
-     // await sendNotification("video");
+      // await sendNotification("video");
       await player.play();
     }
   }
@@ -156,10 +156,17 @@ class VideoCallController extends GetxController {
         maskType: EasyLoadingMaskType.clear,
         dismissOnTap: true);
 
-    await player.stop();
+    await player.pause();
+    await sendNotification("cancel");
     state.isJoined.value = false;
+    state.switchCamera.value = true;
     EasyLoading.dismiss();
     Get.back();
+  }
+
+  Future<void> switchCamera() async {
+    await engine.switchCamera();
+    state.switchCamera.value = !state.switchCamera.value;
   }
 
   Future<void> _dispose() async {
