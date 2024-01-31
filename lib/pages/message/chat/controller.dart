@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class ChatController extends GetxController {
   ChatController();
@@ -45,16 +46,38 @@ class ChatController extends GetxController {
     });
   }
 
- void videoCall() {
+  Future<bool> requestPermission(Permission permission) async {
+    var permissionStatus = await permission.status;
+    if (permissionStatus != PermissionStatus.granted) {
+      var status = await permission.request();
+      if (status != PermissionStatus.granted) {
+        toastInfo(msg: "Please enable permission have video call");
+        if(GetPlatform.isAndroid){
+           await openAppSettings();
+        }
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  Future<void> videoCall() async {
     state.more_status.value = false;
-    Get.toNamed(AppRoutes.VideoCall, parameters: {
+    bool micStatus = await requestPermission(Permission.microphone);
+    bool camStatus = await requestPermission(Permission.camera);
+
+    if(micStatus && camStatus){
+      Get.toNamed(AppRoutes.VideoCall, parameters: {
       "to_token": state.to_token.value,
       "to_name": state.to_name.value,
       "to_avatar": state.to_avatar.value,
       "call_role": "anchor",
       "doc_id": doc_id
     });
+    }
   }
+
   @override
   void onInit() {
     super.onInit();
@@ -97,7 +120,6 @@ class ChatController extends GetxController {
       });
     }
   }
-
 
   @override
   void onReady() {
@@ -322,6 +344,6 @@ class ChatController extends GetxController {
     listener.cancel();
     myInputController.dispose();
     myScrollController.dispose();
-     clearMsgNum(doc_id);
+    clearMsgNum(doc_id);
   }
 }
