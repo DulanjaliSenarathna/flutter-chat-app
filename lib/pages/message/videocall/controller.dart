@@ -55,24 +55,30 @@ class VideoCallController extends GetxController {
       state.isJoined.value = true;
     }, onUserJoined:
             (RtcConnection connection, int remoteUid, int elapsed) async {
+      state.onRemortUID.value = remoteUid;
+      state.isShowAvatar.value = false;
       await player.pause();
     }, onLeaveChannel: (RtcConnection connection, RtcStats stats) {
       print("...... user left the room ......");
       state.isJoined.value = false;
+      state.onRemortUID.value = 0;
+      state.isShowAvatar.value = true;
     }, onRtcStats: (RtcConnection connection, RtcStats stats) {
       print("time ......");
       print(stats.duration);
     }));
 
-    await engine.enableAudio();
-    await engine.setClientRole(role: ClientRoleType.clientRoleBroadcaster);
-    await engine.setAudioProfile(
-        profile: AudioProfileType.audioProfileDefault,
-        scenario: AudioScenarioType.audioScenarioGameStreaming);
+    await engine.enableVideo();
+    await engine.setVideoEncoderConfiguration(const VideoEncoderConfiguration(
+        dimensions: VideoDimensions(width: 640, height: 360),
+        frameRate: 15,
+        bitrate: 0));
+    await engine.startPreview();
+    state.isReadyPreview.value = true;
     await joinChannel();
     if (state.call_role == "anchor") {
       //send notification to the other user
-      await sendNotification("voice");
+     // await sendNotification("video");
       await player.play();
     }
   }
