@@ -80,7 +80,7 @@ class VideoCallController extends GetxController {
     await joinChannel();
     if (state.call_role == "anchor") {
       //send notification to the other user
-      // await sendNotification("video");
+       await sendNotification("video");
       await player.play();
     }
   }

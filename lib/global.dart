@@ -1,4 +1,5 @@
 import 'package:chatty/common/services/services.dart';
+import 'package:chatty/common/store/config.dart';
 import 'package:chatty/common/store/user.dart';
 import 'package:chatty/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -12,6 +13,7 @@ class Global {
       options: DefaultFirebaseOptions.currentPlatform,
     );
     await Get.putAsync<StorageService>(() => StorageService().init());
+    Get.put<ConfigStore>(ConfigStore());
     Get.put<UserStore>(UserStore());
   }
 }

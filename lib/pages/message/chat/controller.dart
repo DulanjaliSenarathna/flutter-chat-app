@@ -67,7 +67,16 @@ class ChatController extends GetxController {
     bool micStatus = await requestPermission(Permission.microphone);
     bool camStatus = await requestPermission(Permission.camera);
 
-    if(micStatus && camStatus){
+    if(GetPlatform.isAndroid && micStatus && camStatus){
+      Get.toNamed(AppRoutes.VideoCall, parameters: {
+      "to_token": state.to_token.value,
+      "to_name": state.to_name.value,
+      "to_avatar": state.to_avatar.value,
+      "call_role": "anchor",
+      "doc_id": doc_id
+    });
+    
+    }else{
       Get.toNamed(AppRoutes.VideoCall, parameters: {
       "to_token": state.to_token.value,
       "to_name": state.to_name.value,
