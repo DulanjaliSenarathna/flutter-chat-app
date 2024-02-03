@@ -244,7 +244,30 @@ class VideoCallController extends GetxController {
         .withConverter(
             fromFirestore: Msgcontent.fromFirestore,
             toFirestore: (Msgcontent msgContent, options) =>
-                msgContent.toFirestore()).add(content);
+                msgContent.toFirestore())
+        .add(content);
+    var messageRes = await db
+        .collection("message")
+        .doc(state.doc_id.value)
+        .withConverter(
+            fromFirestore: Msg.fromFirestore,
+            toFirestore: (Msg msgContent, options) =>
+                msgContent.toFirestore())
+        .get();
+
+    if (messageRes.data() != null) {
+      var item = messageRes.data()!;
+      int to_msg_num = item.to_msg_num==null?0:item.to_msg_num!;
+      int from_msg_num = item.from_msg_num==null?0:item.from_msg_num!;
+      if (item.from_token == profile_token) {
+        from_msg_num = from_msg_num + 1;
+      } else {
+        to_msg_num = to_msg_num + 1;
+      }
+      await db.collection("message").doc(state.doc_id.value).update({"to_msg_num":to_msg_num,"from_msg_num":from_msg_num,"last_msg":sendContent,"last_time":Timestamp.now()});
+
+
+    }
   }
 
   Future<void> _dispose() async {
