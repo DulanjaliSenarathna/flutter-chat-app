@@ -28,6 +28,23 @@ class VideoCallPage extends GetView<VideoCallController> {
                                       connection: RtcConnection(
                                           channelId: controller
                                               .state.channelId.value))),
+                        controller.state.isShowAvatar.value ? Container():
+                        Positioned(
+                          top: 10.h,
+                          left: 30.w,
+                          right: 30.w,
+                          child: Column(
+                            children: [
+                              Container(
+                                child: Text(controller.state.callTime.value,
+                                style: TextStyle(
+                                  color: AppColors.primaryElementText,
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.normal
+                                ),),
+                              )
+                            ],
+                        )),
                           Positioned(
                               bottom: 80.h,
                               left: 30.w,

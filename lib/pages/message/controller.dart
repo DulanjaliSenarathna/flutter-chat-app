@@ -149,7 +149,11 @@ class MessageController extends GetxController {
       BindFcmTokenRequestEntity bindFcmTokenRequestEntity =
           BindFcmTokenRequestEntity();
       bindFcmTokenRequestEntity.fcmtoken = fcmToken;
-      await ChatAPI.bind_fcmtoken(params: bindFcmTokenRequestEntity);
+      try {
+        await ChatAPI.bind_fcmtoken(params: bindFcmTokenRequestEntity);
+      } catch (e) {
+        print(e.toString()+"eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+      }
     }
   }
 }

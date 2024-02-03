@@ -5,6 +5,8 @@ import 'dart:convert';
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:chatty/common/apis/apis.dart';
 import 'package:chatty/common/entities/chat.dart';
+import 'package:chatty/common/entities/chatcall.dart';
+import 'package:chatty/common/entities/entities.dart';
 import 'package:chatty/common/store/store.dart';
 import 'package:chatty/common/values/server.dart';
 import 'package:chatty/pages/message/videocall/state.dart';
@@ -25,6 +27,11 @@ class VideoCallController extends GetxController {
   final db = FirebaseFirestore.instance;
   final profile_token = UserStore.to.profile.token;
   late RtcEngine engine;
+
+  int call_s = 0;
+  int call_m = 0;
+  int call_h = 0;
+  late final Timer callTimer;
 
   ChannelProfileType channelProfileType =
       ChannelProfileType.channelProfileCommunication;
@@ -60,6 +67,7 @@ class VideoCallController extends GetxController {
       //since the other user joined, don't show the avatar anymore
       state.isShowAvatar.value = false;
       await player.pause();
+      callTime();
     }, onLeaveChannel: (RtcConnection connection, RtcStats stats) {
       print("...... user left the room ......");
       state.isJoined.value = false;
@@ -80,9 +88,35 @@ class VideoCallController extends GetxController {
     await joinChannel();
     if (state.call_role == "anchor") {
       //send notification to the other user
-       await sendNotification("video");
+      await sendNotification("video");
       await player.play();
     }
+  }
+
+  void callTime() {
+    callTimer = Timer.periodic(Duration(seconds: 1), (timer) {
+      call_s = call_s + 1;
+      if (call_s >= 60) {
+        call_s = 0;
+        call_m = call_m + 1;
+      }
+      if (call_m >= 60) {
+        call_m = 0;
+        call_h = call_h + 1;
+      }
+
+      var h = call_h < 10 ? "0${call_h}" : "${call_h}";
+      var m = call_m < 10 ? "0${call_m}" : "${call_m}";
+      var s = call_s < 10 ? "0${call_s}" : "${call_s}";
+
+      if (call_h == 0) {
+        state.callTime.value = "$m:$s";
+        state.callTimeNum.value = "$call_m m and $call_s";
+      } else {
+        state.callTime.value = "$h $m:$s";
+        state.callTimeNum.value = "$call_h h $call_m m and $call_s";
+      }
+    });
   }
 
   Future<void> sendNotification(String call_type) async {
@@ -171,7 +205,52 @@ class VideoCallController extends GetxController {
     state.switchCamera.value = !state.switchCamera.value;
   }
 
+  Future<void> addCallTime() async {
+    var profile = UserStore.to.profile;
+    var msgData = ChatCall(
+        from_token: profile.token,
+        to_token: state.to_token.value,
+        from_name: profile.name,
+        to_name: state.to_name.value,
+        from_avatar: profile.avatar,
+        to_avatar: state.to_avatar.value,
+        call_time: state.callTime.value,
+        type: "video",
+        last_time: Timestamp.now());
+
+    await db
+        .collection("chatcall")
+        .withConverter(
+            fromFirestore: ChatCall.fromFirestore,
+            toFirestore: (ChatCall msg, options) => msg.toFirestore())
+        .add(msgData);
+    String sendContent = "Call time ${state.callTimeNum.value} [video]";
+    saveMessage(sendContent);
+  }
+
+  saveMessage(String sendContent) async {
+    if (state.doc_id.value.isEmpty) {
+      return;
+    }
+    final content = Msgcontent(
+        token: profile_token,
+        content: sendContent,
+        type: "text",
+        addtime: Timestamp.now());
+    await db
+        .collection("message")
+        .doc(state.doc_id.value)
+        .collection("msglist")
+        .withConverter(
+            fromFirestore: Msgcontent.fromFirestore,
+            toFirestore: (Msgcontent msgContent, options) =>
+                msgContent.toFirestore()).add(content);
+  }
+
   Future<void> _dispose() async {
+    if (state.call_role == "anchor") {
+      addCallTime();
+    }
     await player.pause();
     await engine.leaveChannel();
     await engine.release();
@@ -182,11 +261,5 @@ class VideoCallController extends GetxController {
   void onClose() {
     _dispose();
     super.onClose();
-  }
-
-  @override
-  void dispose() {
-    _dispose();
-    super.dispose();
   }
 }
