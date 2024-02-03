@@ -23,7 +23,7 @@ class ProfilePage extends GetView<ProfileController> {
                 children: [
                   buildProfilePhoto(controller),
                   bulidName(controller),
-                  buildCompleteBtn(),
+                  buildCompleteBtn(controller),
                   buildLogOutBtn(controller)
                 ],
               ),

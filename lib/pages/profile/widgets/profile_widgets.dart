@@ -89,12 +89,16 @@ Widget bulidName(ProfileController controller) {
                 offset: const Offset(0, 1))
           ]),
       margin: EdgeInsets.only(bottom: 20.h, top: 60.h),
-      child: _profileTextField(controller));
+      child: _profileTextField(controller, controller.nameController));
 }
 
-Widget _profileTextField(ProfileController controller) {
+Widget _profileTextField(
+    ProfileController controller, TextEditingController textEditingController) {
   return TextField(
-    //controller: controller.myInputController,
+    onChanged: (value) {
+      controller.state.profile_detail.value.name = value;
+    },
+    controller: textEditingController,
     maxLines: null,
     keyboardType: TextInputType.multiline,
     decoration: InputDecoration(
@@ -108,19 +112,20 @@ Widget _profileTextField(ProfileController controller) {
             borderSide: BorderSide(color: Colors.transparent)),
         focusedBorder: const OutlineInputBorder(
             borderSide: BorderSide(color: Colors.transparent)),
-        hintStyle:
-            const TextStyle(color: AppColors.primaryText)),
-        style: TextStyle(
-          color: AppColors.primaryText,
-          fontFamily: "Avenir",
-          fontWeight: FontWeight.normal,
-          fontSize: 14.sp
-        ),
+        hintStyle: const TextStyle(color: AppColors.primaryText)),
+    style: TextStyle(
+        color: AppColors.primaryText,
+        fontFamily: "Avenir",
+        fontWeight: FontWeight.normal,
+        fontSize: 14.sp),
   );
 }
 
-Widget buildCompleteBtn() {
+Widget buildCompleteBtn(ProfileController controller) {
   return GestureDetector(
+    onTap: () {
+      controller.goSave();
+    },
     child: Container(
       width: 295.w,
       height: 44.h,
