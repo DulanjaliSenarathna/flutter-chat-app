@@ -357,6 +357,7 @@ class MessagePage extends GetView<MessageController> {
                       ),
                     ),
             ),
+            // show user name,profile photo, call time and duration
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -368,6 +369,7 @@ class MessagePage extends GetView<MessageController> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      // show user name
                       Text(
                         "${item.name}",
                         overflow: TextOverflow.clip,
@@ -379,8 +381,9 @@ class MessagePage extends GetView<MessageController> {
                             color: AppColors.thirdElement,
                             fontSize: 14.sp),
                       ),
+                      //call duration
                       Text(
-                        "${item.last_time}",
+                        "${item.call_time}",
                         overflow: TextOverflow.clip,
                         maxLines: 1,
                         softWrap: false,
@@ -400,6 +403,7 @@ class MessagePage extends GetView<MessageController> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
+                      // last call time
                       Text(
                         item.last_time == null
                             ? ""
@@ -410,7 +414,7 @@ class MessagePage extends GetView<MessageController> {
                         style: TextStyle(
                             fontFamily: "Avenir",
                             fontWeight: FontWeight.normal,
-                            color: AppColors.primaryElementText,
+                            color: AppColors.thirdElementText,
                             fontSize: 11.sp),
                       ),
                       

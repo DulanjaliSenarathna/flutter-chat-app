@@ -6,6 +6,8 @@ import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:chatty/common/apis/apis.dart';
 import 'package:chatty/common/entities/chat.dart';
 import 'package:chatty/common/entities/chatcall.dart';
+import 'package:chatty/common/entities/msg.dart';
+import 'package:chatty/common/entities/msgcontent.dart';
 import 'package:chatty/common/store/store.dart';
 import 'package:chatty/common/values/server.dart';
 import 'package:chatty/pages/message/voicecall/state.dart';
@@ -134,7 +136,53 @@ class VoiceCallController extends GetxController {
     db.collection("chatcall").withConverter(
         fromFirestore: ChatCall.fromFirestore,
         toFirestore: (ChatCall msg, options) => msg.toFirestore()).add(metaData);
+        String sendContent = "Call time ${state.callTimeNum.value} [voice]";
+    saveMessage(sendContent);
   }
+
+  
+  saveMessage(String sendContent) async {
+    if (state.doc_id.value.isEmpty) {
+      return;
+    }
+    final content = Msgcontent(
+        token: profile_token,
+        content: sendContent,
+        type: "text",
+        addtime: Timestamp.now());
+    await db
+        .collection("message")
+        .doc(state.doc_id.value)
+        .collection("msglist")
+        .withConverter(
+            fromFirestore: Msgcontent.fromFirestore,
+            toFirestore: (Msgcontent msgContent, options) =>
+                msgContent.toFirestore())
+        .add(content);
+    var messageRes = await db
+        .collection("message")
+        .doc(state.doc_id.value)
+        .withConverter(
+            fromFirestore: Msg.fromFirestore,
+            toFirestore: (Msg msgContent, options) =>
+                msgContent.toFirestore())
+        .get();
+
+    if (messageRes.data() != null) {
+      var item = messageRes.data()!;
+      int to_msg_num = item.to_msg_num==null?0:item.to_msg_num!;
+      int from_msg_num = item.from_msg_num==null?0:item.from_msg_num!;
+      if (item.from_token == profile_token) {
+        from_msg_num = from_msg_num + 1;
+      } else {
+        to_msg_num = to_msg_num + 1;
+      }
+      await db.collection("message").doc(state.doc_id.value).update({"to_msg_num":to_msg_num,"from_msg_num":from_msg_num,"last_msg":sendContent,"last_time":Timestamp.now()});
+
+
+    }
+  }
+
 
   Future<void> joinChannel() async {
     await [Permission.microphone, Permission.camera].request();
