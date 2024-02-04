@@ -19,6 +19,7 @@ class MessageController extends GetxController {
 
   void goProfile() async {
     await Get.toNamed(AppRoutes.Profile, arguments: state.head_detail.value);
+    getProfile();
   }
 
   @override
@@ -152,7 +153,7 @@ class MessageController extends GetxController {
       try {
         await ChatAPI.bind_fcmtoken(params: bindFcmTokenRequestEntity);
       } catch (e) {
-        print(e.toString()+"eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+        print(e.toString() + "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
       }
     }
   }

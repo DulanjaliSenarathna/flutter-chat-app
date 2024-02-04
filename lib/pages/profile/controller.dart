@@ -93,6 +93,7 @@ class ProfileController extends GetxController {
     if (result.code == 0) {
       state.profile_detail.value.avatar = result.data;
       state.profile_detail.refresh();
+      print('${result.data}');
     } else {
       toastInfo(msg: "Image upload error");
     }

@@ -12,30 +12,32 @@ class ProfilePage extends GetView<ProfileController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildAppBar(),
-      body: SafeArea(
-          child: CustomScrollView(
-        slivers: [
-          SliverToBoxAdapter(
-            child: Container(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  buildProfilePhoto(controller,context),
-                  bulidName(controller,(value) {
-      controller.state.profile_detail.value.name = value;
-    },controller.state.profile_detail.value.name??""),
-                  bulidDescription(controller, (value) {
-      controller.state.profile_detail.value.description = value;
-    },controller.state.profile_detail.value.description??"Enter a description"),
-                  buildCompleteBtn(controller),
-                  buildLogOutBtn(controller)
-                ],
+      body: Obx(
+        ()=> SafeArea(
+            child: CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(
+              child: Container(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    buildProfilePhoto(controller,context),
+                    bulidName(controller,(value) {
+        controller.state.profile_detail.value.name = value;
+            },controller.state.profile_detail.value.name??""),
+                    bulidDescription(controller, (value) {
+        controller.state.profile_detail.value.description = value;
+            },controller.state.profile_detail.value.description??"Enter a description"),
+                    buildCompleteBtn(controller),
+                    buildLogOutBtn(controller)
+                  ],
+                ),
               ),
-            ),
-          )
-        ],
-      )),
+            )
+          ],
+        )),
+      ),
     );
   }
 }
