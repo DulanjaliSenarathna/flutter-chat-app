@@ -39,12 +39,83 @@ class MessageController extends GetxController {
       Future.delayed(const Duration(seconds: 2), () {
         asyncLoadMsgData();
       });
-    } else {}
+    } else {
+      asyncLoadCallData();
+    }
 
     EasyLoading.dismiss();
   }
 
-  void asyncLoadMsgData() async {
+  Future<void> asyncLoadCallData() async {
+    state.callLlist.clear();
+    var token = UserStore.to.profile.token;
+    var from_chatcall = await db
+        .collection("chatcall")
+        .withConverter(
+            fromFirestore: ChatCall.fromFirestore,
+            toFirestore: (ChatCall msg, options) => msg.toFirestore())
+        .where("from_token", isEqualTo: token)
+        .limit(30)
+        .get();
+
+    print(from_chatcall.docs.length);
+
+    var to_chatcall = await db
+        .collection("chatcall")
+        .withConverter(
+            fromFirestore: ChatCall.fromFirestore,
+            toFirestore: (ChatCall msg, options) => msg.toFirestore())
+        .where("to_token", isEqualTo: token)
+        .limit(30)
+        .get();
+    print(to_chatcall.docs.length);
+
+    if (from_chatcall.docs.isNotEmpty) {
+      await addChatCall(from_chatcall.docs);
+    }
+
+    if (to_chatcall.docs.isNotEmpty) {
+      await addChatCall(to_chatcall.docs);
+    }
+
+    state.callLlist.value.sort((a, b) {
+      if (b.last_time == null) {
+        return 0;
+      }
+      if (a.last_time == null) {
+        return 0;
+      }
+      return b.last_time!.compareTo(a.last_time!);
+    });
+  }
+
+  addChatCall(List<QueryDocumentSnapshot<ChatCall>> data) {
+    data.forEach((element) {
+      var item = element.data();
+      CallMessage message = CallMessage();
+
+      //Saves the current properties
+      message.doc_id = element.id;
+      print('================================= ${message.doc_id}');
+      message.last_time = item.last_time;
+      //message.msg_num = item.msg_num;
+      message.call_time = item.call_time;
+      if (item.from_token == token) {
+        message.name = item.to_name;
+        message.avatar = item.to_avatar;
+        message.token = item.to_token;
+       
+      } else {
+        message.name = item.from_name;
+        message.avatar = item.from_avatar;
+        message.token = item.from_token;
+        
+      }
+      state.callLlist.add(message);
+    });
+  }
+
+  Future<void> asyncLoadMsgData() async {
     //var token = UserStore.to.profile.token;
     var from_messages = await db
         .collection("message")
@@ -74,6 +145,16 @@ class MessageController extends GetxController {
     if (to_messages.docs.isNotEmpty) {
       await addMessage(to_messages.docs);
     }
+
+    state.msgLlist.value.sort((a, b) {
+      if (b.last_time == null) {
+        return 0;
+      }
+      if (a.last_time == null) {
+        return 0;
+      }
+      return b.last_time!.compareTo(a.last_time!);
+    });
   }
 
   addMessage(List<QueryDocumentSnapshot<Msg>> data) {
