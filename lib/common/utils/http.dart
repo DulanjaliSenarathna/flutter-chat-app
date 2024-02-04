@@ -124,8 +124,6 @@ class HttpUtil {
         return ErrorEntity(code: -1, message: "Request timed out");
       case DioErrorType.receiveTimeout:
         return ErrorEntity(code: -1, message: "Response timeout");
-      case DioErrorType.cancel:
-        return ErrorEntity(code: -1, message: "Request cancellation");
       case DioErrorType.response:
         {
           try {

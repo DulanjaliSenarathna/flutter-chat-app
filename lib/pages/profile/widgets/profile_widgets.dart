@@ -18,7 +18,7 @@ AppBar buildAppBar() {
   );
 }
 
-Widget buildProfilePhoto(ProfileController controller) {
+Widget buildProfilePhoto(ProfileController controller, BuildContext context) {
   return Stack(
     children: [
       Container(
@@ -60,6 +60,9 @@ Widget buildProfilePhoto(ProfileController controller) {
           right: 0.w,
           height: 35.w,
           child: GestureDetector(
+            onTap: () {
+              _showPicker(context,controller);
+            },
             child: Container(
               height: 35.w,
               width: 35.w,
@@ -74,7 +77,32 @@ Widget buildProfilePhoto(ProfileController controller) {
   );
 }
 
-Widget bulidName(ProfileController controller,void Function(String value)? func,String text) {
+void _showPicker(BuildContext context, ProfileController controller) {
+  showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) => SafeArea(
+              child: Wrap(
+            children: [
+              ListTile(
+                leading: Icon(Icons.photo_library),
+                title: Text("Gallery"),
+                onTap: () {
+                  controller.imgFromGallery();
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.photo_camera),
+                title: Text("Camera"),
+                onTap: () {
+                  controller.imgFromCamera();
+                },
+              )
+            ],
+          )));
+}
+
+Widget bulidName(ProfileController controller,
+    void Function(String value)? func, String text) {
   return Container(
       width: 295.w,
       height: 44.h,
@@ -89,11 +117,13 @@ Widget bulidName(ProfileController controller,void Function(String value)? func,
                 offset: const Offset(0, 1))
           ]),
       margin: EdgeInsets.only(bottom: 20.h, top: 60.h),
-      child: _profileTextField(controller, controller.nameController,func,text));
+      child:
+          _profileTextField(controller, controller.nameController, func, text));
 }
 
-Widget bulidDescription(ProfileController controller, void Function(String value)? func, String text){
- return Container(
+Widget bulidDescription(ProfileController controller,
+    void Function(String value)? func, String text) {
+  return Container(
       width: 295.w,
       height: 44.h,
       decoration: BoxDecoration(
@@ -107,12 +137,17 @@ Widget bulidDescription(ProfileController controller, void Function(String value
                 offset: const Offset(0, 1))
           ]),
       margin: EdgeInsets.only(bottom: 20.h, top: 10.h),
-      child: _profileTextField(controller, controller.descriptionController,func,text));
+      child: _profileTextField(
+          controller, controller.descriptionController, func, text));
 }
+
 Widget _profileTextField(
-    ProfileController controller, TextEditingController textEditingController,void Function(String value)? func,String text) {
+    ProfileController controller,
+    TextEditingController textEditingController,
+    void Function(String value)? func,
+    String text) {
   return TextField(
-    onChanged: (value)=> func!(value),
+    onChanged: (value) => func!(value),
     controller: textEditingController,
     maxLines: null,
     keyboardType: TextInputType.multiline,

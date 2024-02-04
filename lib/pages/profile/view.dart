@@ -21,7 +21,7 @@ class ProfilePage extends GetView<ProfileController> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  buildProfilePhoto(controller),
+                  buildProfilePhoto(controller,context),
                   bulidName(controller,(value) {
       controller.state.profile_detail.value.name = value;
     },controller.state.profile_detail.value.name??""),
