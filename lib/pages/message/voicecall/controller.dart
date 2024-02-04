@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:chatty/common/apis/apis.dart';
 import 'package:chatty/common/entities/chat.dart';
+import 'package:chatty/common/entities/chatcall.dart';
 import 'package:chatty/common/store/store.dart';
 import 'package:chatty/common/values/server.dart';
 import 'package:chatty/pages/message/voicecall/state.dart';
@@ -69,6 +70,7 @@ class VoiceCallController extends GetxController {
     await engine.setAudioProfile(
         profile: AudioProfileType.audioProfileDefault,
         scenario: AudioScenarioType.audioScenarioGameStreaming);
+
     await joinChannel();
     if (state.call_role == "anchor") {
       //send notification to the other user
@@ -117,8 +119,25 @@ class VoiceCallController extends GetxController {
     return "";
   }
 
+  Future<void> addCallTime() async {
+    var profile = UserStore.to.profile;
+   var metaData = ChatCall(
+        from_token: profile.token,
+        to_token: state.to_token.value,
+        from_name: profile.name,
+        to_name: state.to_name.value,
+        from_avatar: profile.avatar,
+        to_avatar: state.to_avatar.value,
+        call_time: state.callTime.value,
+        type: "voice",
+        last_time: Timestamp.now());
+    db.collection("chatcall").withConverter(
+        fromFirestore: ChatCall.fromFirestore,
+        toFirestore: (ChatCall msg, options) => msg.toFirestore()).add(metaData);
+  }
+
   Future<void> joinChannel() async {
-    await [Permission.microphone,Permission.camera].request();
+    await [Permission.microphone, Permission.camera].request();
     EasyLoading.instance.loadingStyle = EasyLoadingStyle.light;
     EasyLoading.show(
         indicator: const CircularProgressIndicator(),
@@ -159,6 +178,7 @@ class VoiceCallController extends GetxController {
   Future<void> _dispose() async {
     await player.pause();
     await engine.leaveChannel();
+    await addCallTime();
     await engine.release();
     await player.stop();
   }
