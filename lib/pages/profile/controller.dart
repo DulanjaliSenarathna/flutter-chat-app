@@ -12,6 +12,7 @@ class ProfileController extends GetxController {
   final title = 'Jengo .';
   final state = ProfileState();
   TextEditingController nameController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
 
   @override
   void onInit() {
@@ -31,6 +32,12 @@ class ProfileController extends GetxController {
     if (state.profile_detail.value.name == null ||
         state.profile_detail.value.name!.isEmpty) {
       toastInfo(msg: "Name can't be empty");
+      return;
+    }
+    if (state.profile_detail.value.description == null ||
+        state.profile_detail.value.description!.isEmpty) {
+      toastInfo(msg: "Description can't be empty");
+      return;
     }
 
     LoginRequestEntity loginRequestEntity = LoginRequestEntity();
@@ -38,7 +45,7 @@ class ProfileController extends GetxController {
     loginRequestEntity.avatar = userItem.avatar;
     loginRequestEntity.name = userItem.name;
     loginRequestEntity.description = userItem.description;
-    loginRequestEntity.online = userItem.online;
+    loginRequestEntity.online = userItem.online ?? 0;
     var result = await UserAPI.UpdateProfile(params: loginRequestEntity);
     if (result.code == 0) {
       UserItem userItem = state.profile_detail.value;

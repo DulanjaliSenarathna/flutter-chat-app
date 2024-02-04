@@ -74,7 +74,7 @@ Widget buildProfilePhoto(ProfileController controller) {
   );
 }
 
-Widget bulidName(ProfileController controller) {
+Widget bulidName(ProfileController controller,void Function(String value)? func,String text) {
   return Container(
       width: 295.w,
       height: 44.h,
@@ -89,20 +89,35 @@ Widget bulidName(ProfileController controller) {
                 offset: const Offset(0, 1))
           ]),
       margin: EdgeInsets.only(bottom: 20.h, top: 60.h),
-      child: _profileTextField(controller, controller.nameController));
+      child: _profileTextField(controller, controller.nameController,func,text));
 }
 
+Widget bulidDescription(ProfileController controller, void Function(String value)? func, String text){
+ return Container(
+      width: 295.w,
+      height: 44.h,
+      decoration: BoxDecoration(
+          color: AppColors.primaryBackground,
+          borderRadius: BorderRadius.all(Radius.circular(5.w)),
+          boxShadow: [
+            BoxShadow(
+                color: Colors.grey.withOpacity(0.1),
+                spreadRadius: 1,
+                blurRadius: 2,
+                offset: const Offset(0, 1))
+          ]),
+      margin: EdgeInsets.only(bottom: 20.h, top: 10.h),
+      child: _profileTextField(controller, controller.descriptionController,func,text));
+}
 Widget _profileTextField(
-    ProfileController controller, TextEditingController textEditingController) {
+    ProfileController controller, TextEditingController textEditingController,void Function(String value)? func,String text) {
   return TextField(
-    onChanged: (value) {
-      controller.state.profile_detail.value.name = value;
-    },
+    onChanged: (value)=> func!(value),
     controller: textEditingController,
     maxLines: null,
     keyboardType: TextInputType.multiline,
     decoration: InputDecoration(
-        hintText: controller.state.profile_detail.value.name,
+        hintText: text,
         contentPadding: EdgeInsets.only(left: 15.w, top: 0, bottom: 0),
         border: const OutlineInputBorder(
             borderSide: BorderSide(color: Colors.transparent)),
